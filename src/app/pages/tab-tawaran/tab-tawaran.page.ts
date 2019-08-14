@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
+import { LoadingController, IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class TabTawaranPage implements OnInit {
   itemsData : any;
   nextPage : any;
   totalPage : any;
-  constructor(public authService: AuthService) {
+  loaderToShow: any;
+  constructor(public authService: AuthService, public loadingController: LoadingController) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.itemsData = [];
@@ -28,16 +29,22 @@ export class TabTawaranPage implements OnInit {
    }
 
   ngOnInit() {
-   this.getData()
+    this.showLoader()
+    this.getData();
+    this.hideLoader()
+
   }
 
   getData(){
     this.authService.getData('api/provider/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.nextPage).subscribe(res => {
-      /* console.log(res) */
-      this.itemsData = this.itemsData.concat(res.data);
-      this.nextPage++;
-      this.totalPage = res.total;
-  
+      if(res){
+        this.itemsData = this.itemsData.concat(res.data);
+        this.nextPage++;
+        this.totalPage = res.total;
+      }
+
+    
+
     }); 
   }
   loadMore(event) {
@@ -76,4 +83,22 @@ export class TabTawaranPage implements OnInit {
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
+
+  showLoader() {
+    this.loaderToShow = this.loadingController.create({
+      message: 'Processing Server Request'
+    }).then((res) => {
+      res.present();
+
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+    this.hideLoader();
+  }
+
+  hideLoader() {
+    setTimeout(() => {
+      this.loadingController.dismiss();
+    }, 2000);  }
 }
