@@ -92,7 +92,7 @@
    --ion-color-indigo-shade: #ffffff;
    --ion-color-indigo-tint: #ffffff;
 
-   --ion-font-family: 'Roboto-Regular';
+   --ion-font-family: 'OpenSans-Regular';
 
 }
 
@@ -110,6 +110,13 @@
   font-style: normal;
   font-weight: normal;
   src: url('../assets/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSans-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/OpenSans-Regular.ttf');
 }
  
 @font-face {
