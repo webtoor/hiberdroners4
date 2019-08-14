@@ -18,7 +18,8 @@ const routes: Routes = [
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
   { path: 'tab-tawaran', loadChildren: './tab-tawaran/tab-tawaran.module#TabTawaranPageModule' },
    */
-   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' }
+   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
+  { path: 'tab-berjalan', loadChildren: './tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' }
 
 ];
 
