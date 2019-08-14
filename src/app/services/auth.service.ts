@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
-let apiUrl = "http://127.0.0.1:8000/";
+//let apiUrl = "http://127.0.0.1:8000/";
+let apiUrl = "http://192.168.1.9:8000/";
+
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +44,31 @@ export class AuthService {
       );
   }
 
+  private handleError(error: Response | any) {  
+    console.error(error.message || error);  
+    return Observable.throw(error.status);  
+  }  
+
+  getData(type){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Accept' : 'application/json',
+        'Authorization': 'Bearer ' + this.data_provider['access_token']
+      })
+    };
+    return this.http.get(apiUrl+type, httpOptions)
+    .pipe(
+      map(res => {
+        if (res['success'] == false) {
+          throw new Error('Value expected!');
+        }
+        //console.log(res['data'])
+        return res['data'];
+      }),
+      catchError(this.handleError)
+   );
+  }
   
   isAuthenticated(){
     return localStorage.getItem('userProvider');
