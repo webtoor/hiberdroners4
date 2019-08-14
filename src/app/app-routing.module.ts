@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
- /*  {
+ {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
-  {
+   /* {
     path: 'home',
     loadChildren: './home/home.module#HomePageModule'
   },
@@ -18,10 +18,11 @@ const routes: Routes = [
   { path: 'tabs', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
   { path: 'tab-tawaran', loadChildren: './pages/tab-tawaran/tab-tawaran.module#TabTawaranPageModule' },
    */
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+
    { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
   { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' },
   { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' },
-  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' }
 
 ];
 
