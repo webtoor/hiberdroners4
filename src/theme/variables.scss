@@ -91,6 +91,9 @@
    --ion-color-indigo-contrast-rgb: 0, 0, 0;
    --ion-color-indigo-shade: #ffffff;
    --ion-color-indigo-tint: #ffffff;
+
+   --ion-font-family: 'Roboto-Regular';
+
 }
 
 .ion-color-indigo{
@@ -101,3 +104,18 @@
   --ion-color-shade: var(--ion-color-indigo-shade);
   --ion-color-tint: var(--ion-color-indigo-tint);
 }
+
+@font-face {
+  font-family: 'Roboto-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/Roboto-Regular.ttf');
+}
+ 
+@font-face {
+  font-family: 'Righteous';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/Righteous.woff2');
+}
+ 
