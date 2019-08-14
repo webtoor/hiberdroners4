@@ -5,5 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  constructor() { }
+  constructor() { 
+  }
+
+  isAuthenticated(){
+    return localStorage.getItem('adminData');
+  }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './guards/auth-guard.service';
 
 const routes: Routes = [
  {
@@ -20,9 +21,9 @@ const routes: Routes = [
    */
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 
-   { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
-  { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' },
-  { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' },
+   { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule', canActivate : [AuthGuardService] },
+  { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule', canActivate : [AuthGuardService] },
+  { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule', canActivate : [AuthGuardService] },
 
 ];
 

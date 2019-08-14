@@ -11,9 +11,16 @@ export class LoginPage implements OnInit {
   constructor(public router : Router) { }
 
   ngOnInit() {
+    if(localStorage.getItem('adminData') == ''){
+
+    }else{
+      this.router.navigate(['/tabs/tab-tawaran']);
+    }
   }
 
   login(){
+    localStorage.setItem("adminData", 'test');
+
     this.router.navigate(['/tabs/tab-tawaran']);
   }
 
