@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public loginForm : FormGroup;
+  loginForm : FormGroup;
   submitted = false;
 
   constructor(public router : Router, private formBuilder: FormBuilder,  public toastController: ToastController) {
@@ -18,9 +18,8 @@ export class LoginPage implements OnInit {
     this.loginForm = this.formBuilder.group({
       'email' : [null, [Validators.required, Validators.email]],
       'password' : [null, Validators.required],
-      'device_token' : ""
     });
-    this.loginForm['device_token'] = 'test';
+
 
    }
 
@@ -41,7 +40,11 @@ export class LoginPage implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
-    console.log(form)
+    this.loginForm.value['device_token'] = "asdasd"
+    console.log(this.loginForm.value)
+    localStorage.setItem("adminData", this.loginForm.value);
+
+    this.router.navigate(['/tabs/tab-tawaran']);
 }
 
   get f() { return this.loginForm.controls; }
