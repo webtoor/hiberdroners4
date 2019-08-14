@@ -20,7 +20,8 @@ const routes: Routes = [
    */
    { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
   { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' },
-  { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' }
+  { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' }
 
 ];
 
