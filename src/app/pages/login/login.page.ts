@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-login',
@@ -7,10 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  userProviders = { "email": "", "password": "", "device_token" : "" };
-  constructor(public router : Router) { }
+  public loginForm : FormGroup;
+  submitted = false;
+
+  constructor(public router : Router, private formBuilder: FormBuilder,  public toastController: ToastController) {
+    this.loginForm = this.formBuilder.group({
+      'email' : [null, Validators.required],
+      'password' : [null, Validators.required]
+    });
+   }
 
   ngOnInit() {
+   
+    
     if(localStorage.getItem('adminData') == ''){
 
     }else{
@@ -18,6 +30,26 @@ export class LoginPage implements OnInit {
     }
   }
 
+ 
+  onFormSubmit(form: NgForm) {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+        return;
+    }
+}
+
+  get f() { return this.loginForm.controls; }
+
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
   login(){
     localStorage.setItem("adminData", 'test');
 
