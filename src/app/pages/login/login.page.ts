@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -13,7 +14,10 @@ export class LoginPage implements OnInit {
   loginForm : FormGroup;
   submitted = false;
 
-  constructor(public router : Router, private formBuilder: FormBuilder,  public toastController: ToastController) {
+  constructor(public router : Router, 
+    private formBuilder: FormBuilder,  
+    public toastController: ToastController,
+    public authService: AuthService,) {
     
     this.loginForm = this.formBuilder.group({
       'email' : [null, [Validators.required, Validators.email]],
@@ -25,8 +29,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
    
-    
-    if(localStorage.getItem('adminData') == ''){
+    if(localStorage.getItem('userProvider') == ''){
 
     }else{
       this.router.navigate(['/tabs/tab-tawaran']);
@@ -42,18 +45,28 @@ export class LoginPage implements OnInit {
     }
     this.loginForm.value['device_token'] = "asdasd"
     console.log(this.loginForm.value)
-    localStorage.setItem("adminData", this.loginForm.value);
+      this.authService.login( this.loginForm.value, 'login_user')
+      .subscribe(res => {
+        console.log(res)
+        if(res.access_token) {
+          localStorage.setItem('userProvider', JSON.stringify(res));
+          this.router.navigate(['/tabs/tab-tawaran']);
+        }else{
+          this.presentToast();
+        }
+      }, (err) => {
+        console.log(err);
+      });
 
-    this.router.navigate(['/tabs/tab-tawaran']);
 }
 
   get f() { return this.loginForm.controls; }
 
-  async presentToast(msg) {
+  async presentToast() {
     const toast = await this.toastController.create({
-      message: msg,
-      duration: 2000,
-      position: 'top'
+      message: 'Anda memasukkan Email dan Password yang salah. Isi dengan data yang benar dan coba lagi',
+      duration: 3000,
+      position: 'bottom'
     });
     toast.present();
   }

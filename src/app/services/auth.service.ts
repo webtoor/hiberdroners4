@@ -11,7 +11,7 @@ let apiUrl = "http://127.0.0.1:8000/";
 export class AuthService {
   data_provider:any;
   constructor(public http:HttpClient) {
-    const data  = localStorage.getItem('providerData');
+    const data  = localStorage.getItem('userProvider');
     this.data_provider = JSON.parse(data);
    }
 
@@ -34,7 +34,6 @@ export class AuthService {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Accept' : 'application/json',
-        'Authorization': 'Bearer ' + this.data_provider['access_token']
       })
     };
     return this.http.post<any>(apiUrl+type, data, httpOptions)
@@ -45,6 +44,6 @@ export class AuthService {
 
   
   isAuthenticated(){
-    return localStorage.getItem('adminData');
+    return localStorage.getItem('userProvider');
   }
 }
