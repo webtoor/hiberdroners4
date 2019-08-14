@@ -14,10 +14,14 @@ export class LoginPage implements OnInit {
   submitted = false;
 
   constructor(public router : Router, private formBuilder: FormBuilder,  public toastController: ToastController) {
+    
     this.loginForm = this.formBuilder.group({
-      'email' : [null, Validators.required],
-      'password' : [null, Validators.required]
+      'email' : [null, [Validators.required, Validators.email]],
+      'password' : [null, Validators.required],
+      'device_token' : ""
     });
+    this.loginForm['device_token'] = 'test';
+
    }
 
   ngOnInit() {
@@ -33,11 +37,11 @@ export class LoginPage implements OnInit {
  
   onFormSubmit(form: NgForm) {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.loginForm.invalid) {
         return;
     }
+    console.log(form)
 }
 
   get f() { return this.loginForm.controls; }

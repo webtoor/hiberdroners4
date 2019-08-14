@@ -11,9 +11,14 @@ ion-content{
 }
 :host {
     .item-interactive.ion-invalid{
-     --highlight-background: yellow !important;
+     --highlight-background: #ff0000 !important;
    }
    .item-interactive.ion-valid{
      --highlight-background: #1a237e !important;
    }
+ }
+
+ .invalid-feedback{
+   color: #ff0000;
+   font-size: 13px;
  }
