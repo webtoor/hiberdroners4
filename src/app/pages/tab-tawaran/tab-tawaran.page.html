@@ -1,7 +1,7 @@
 <ion-content class="bg-style">
           <ion-virtual-scroll [items]="dataList">
-              <ion-item *virtualItem="let item">
-                  <ion-card > 
+              <!-- <ion-item *virtualItem="let item"> -->
+                  <ion-card *virtualItem="let item"> 
                       <ion-item>
                         <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
                         <ion-label><b>Proyek 1</b></ion-label>
@@ -14,10 +14,12 @@
               
                           <h2>{{item}}</h2>
                       </ion-card-content>
-                      <ion-button fill="clear" slot="end" color="indigo">Ikuti</ion-button>
+                  <!--     <div text-right style="margin-bottom: 50p;">
+                          <ion-button fill="clear"  color="indigo"><b>Ikuti</b></ion-button>
+                      </div> -->
               
                     </ion-card>
-              </ion-item>
+             <!--  </ion-item> -->
             </ion-virtual-scroll>
            
            
@@ -29,3 +31,21 @@
             </ion-infinite-scroll>
      
 </ion-content>
+<ion-footer style="height: 40px; background-color: #FAFAFA">
+    <ion-grid style="margin-top:-13px">
+        <ion-row>
+          <ion-col text-center>
+            <ion-button fill="clear" color="indigo">
+                  <ion-icon name="move"></ion-icon>
+                  <label>URUTKAN</label>
+          </ion-button>
+          </ion-col>
+          <ion-col text-center>
+            <ion-button fill="clear" color="indigo">
+                  <ion-icon name="search"></ion-icon>
+                  <label>FILTER</label>
+          </ion-button>    
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-footer>
