@@ -17,11 +17,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab2',
+        path: 'tab-berjalan',
         children: [
           {
             path: '',
-            loadChildren: '../tab-tawaran/tab-tawaran.module#TabTawaranPageModule'
+            loadChildren: '../tab-berjalan/tab-berjalan.module#TabBerjalanPageModule'
           }
         ]
       },
