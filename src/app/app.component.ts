@@ -10,11 +10,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
   public appPages = [
-    {
+    /* {
       title: 'Home',
       url: '/home',
       icon: 'home'
-    },
+    }, */
     {
       title: 'List',
       url: '/list',
@@ -32,8 +32,9 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString('#000051');
+      this.statusBar.styleBlackTranslucent();
     });
   }
 }
