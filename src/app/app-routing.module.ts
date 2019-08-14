@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'tab-tawaran', loadChildren: './tab-tawaran/tab-tawaran.module#TabTawaranPageModule' },
    */
    { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'tab-berjalan', loadChildren: './tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' }
+  { path: 'tab-berjalan', loadChildren: './tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' },
+  { path: 'tab-riwayat', loadChildren: './page/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' }
 
 ];
 

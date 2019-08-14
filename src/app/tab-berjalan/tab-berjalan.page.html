@@ -6,7 +6,7 @@
       </ion-col>
       <ion-col>
         <ion-item lines="none">
-          <ion-toggle color="primary" checked="false" style="position: absolute; left: 45%;transform: translateX(-50%);" [(ngModel)]="theState" (ionChange)="change()"></ion-toggle>
+          <ion-toggle color="primary" checked="false" style="position: absolute; left: 45%;transform: translateX(-50%);"></ion-toggle>
         </ion-item>
         </ion-col>
       <ion-col>
@@ -14,4 +14,20 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-card > 
+    <ion-item>
+      <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
+      <ion-label><b>Proyek 1</b></ion-label>
+      <ion-button fill="outline" slot="end" color="indigo">Lihat</ion-button>
+    </ion-item>
+  
+    <ion-card-content >
+        <h3 style="margin-bottom: 5px;">02 Feb 2019 User</h3>
+        <p style="margin-bottom: 10px;">Tanggal proyek : 02 Feb 2019 - 03 Feb 2019</p>
+
+        <h2>Konstruksi</h2>
+    </ion-card-content>
+    <ion-button fill="clear" slot="end" color="indigo">Ikuti</ion-button>
+
+  </ion-card>
 </ion-content>
