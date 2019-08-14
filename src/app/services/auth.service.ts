@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-//let apiUrl = "http://127.0.0.1:8000/";
-let apiUrl = "http://192.168.1.9:8000/";
+let apiUrl = "http://127.0.0.1:8000/";
+/* let apiUrl = "http://192.168.1.9:8000/"; */
 
 
 @Injectable({
@@ -22,6 +22,7 @@ export class AuthService {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Accept' : 'application/json',
+        'Access-Control-Allow-Origin' :  '*',
         'Authorization': 'Bearer ' + this.data_provider['access_token']
       })
     };
@@ -54,6 +55,7 @@ export class AuthService {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Accept' : 'application/json',
+        'Access-Control-Allow-Origin' :  '*',
         'Authorization': 'Bearer ' + this.data_provider['access_token']
       })
     };
