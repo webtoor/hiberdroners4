@@ -17,11 +17,13 @@ export class TabTawaranPage implements OnInit {
   nextPage : any;
   totalPage : any;
   loaderToShow: any;
+  isShown
   constructor(public authService: AuthService, public loadingController: LoadingController) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.itemsData = [];
     this.nextPage = 1;
+
    /*  this.dataList = []
     for (let i = 0; i < 5; i++) { 
       this.dataList.push("Item number "+(this.dataList.length+1));
@@ -42,11 +44,18 @@ export class TabTawaranPage implements OnInit {
         this.nextPage++;
         this.totalPage = res.total;
       }
-
-    
-
     }); 
   }
+
+  scrollStart(event:any) { 
+    this.isShown = false;
+  }
+  onScroll(event:any){
+    this.isShown = false;
+  }
+  scrollStop(event) {
+    this.isShown = true;
+ }
   loadMore(event) {
   /*   console.log(this.dataList.length)
     setTimeout(() => {
