@@ -26,11 +26,11 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab3',
+        path: 'tab-riwayat',
         children: [
           {
             path: '',
-            loadChildren: '../tab-tawaran/tab-tawaran.module#TabTawaranPageModule'
+            loadChildren: '../tab-riwayat/tab-riwayat.module#TabRiwayatPageModule'
           }
         ]
       },

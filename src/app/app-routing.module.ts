@@ -15,12 +15,12 @@ const routes: Routes = [
     path: 'list',
     loadChildren: './list/list.module#ListPageModule'
   },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'tab-tawaran', loadChildren: './tab-tawaran/tab-tawaran.module#TabTawaranPageModule' },
+  { path: 'tabs', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
+  { path: 'tab-tawaran', loadChildren: './pages/tab-tawaran/tab-tawaran.module#TabTawaranPageModule' },
    */
-   { path: '', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'tab-berjalan', loadChildren: './tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' },
-  { path: 'tab-riwayat', loadChildren: './page/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' }
+   { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule' },
+  { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule' },
+  { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule' }
 
 ];
 
