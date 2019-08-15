@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-tawaran',
@@ -10,83 +11,104 @@ import { AuthService } from '../../services/auth.service';
 export class TabTawaranPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
-  dataList:any;
   userDetails : any;
   filter:any;
-  itemsData : any;
-  nextPage : any;
-  totalPage : any;
   loaderToShow: any;
   isShown
-  constructor(public authService: AuthService, public loadingController: LoadingController) {
+  responseData
+  data_json
+  dataList
+  page : any;
+  totalData = 0;
+  totalPage = 0;
+
+  constructor(public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
-    this.itemsData = [];
-    this.nextPage = 1;
-
-   /*  this.dataList = []
-    for (let i = 0; i < 5; i++) { 
+    this.page = 0;
+    this.dataList = [];
+    
+  /*   for (let i = 0; i < 10; i++) { 
       this.dataList.push("Item number "+(this.dataList.length+1));
     } */
    }
 
   ngOnInit() {
-    this.showLoader()
-    this.getData();
-    this.hideLoader()
-
+    this.FirstData();
   }
 
-  getData(){
-    this.authService.getData('api/provider/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.nextPage).subscribe(res => {
-      if(res){
-        this.itemsData = this.itemsData.concat(res.data);
-        this.nextPage++;
-        this.totalPage = res.total;
+   FirstData(){
+    this.showLoader()
+    this.page = this.page + 1;
+    this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
+      this.responseData = res;
+      if(this.responseData != ''){
+        this.dataList = this.dataList.concat(this.responseData.data);
+        this.totalData = this.responseData.total; 
+        this.totalPage = this.responseData.last_page;
+        this.hideLoader()
+      }else{
+        localStorage.clear();
+        this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
+        this.hideLoader()
       }
     }); 
+  } 
+
+  getData(){
+    this.page = this.page + 1;
+      this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
+        this.responseData = res;
+        if(this.responseData != ''){
+          this.dataList = this.dataList.concat(this.responseData.data);
+          this.totalData = this.responseData.total; 
+          this.totalPage = this.responseData.last_page;
+        }else{
+          localStorage.clear();
+          this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
+        }
+      }); 
   }
 
-  scrollStart(event:any) { 
-    this.isShown = false;
+ /*  scrollStart(event:any) { 
+    //this.isShown = true;
   }
   onScroll(event:any){
-    this.isShown = false;
+    //this.isShown = false;
   }
   scrollStop(event) {
-    this.isShown = true;
- }
+    //this.isShown = true;
+ } */
   loadMore(event) {
-  /*   console.log(this.dataList.length)
-    setTimeout(() => {
-    
-      for (let i = 0; i < 5; i++) { 
-        this.dataList.push("Item number "+(this.dataList.length+1));
-      }
+    /* setTimeout(() => {
+
+      this.getData();
       //Hide Infinite List Loader on Complete
       event.target.complete();
 
-      //Rerender Virtual Scroll List After Adding New Data
-      this.virtualScroll.checkEnd();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.dataList.length >= 11) {
-        event.target.disabled = true;
-      }
-    }, 500); */
-    console.log(this.itemsData.length)
-    setTimeout(() => {
-    this.getData()
-      //Hide Infinite List Loader on Complete
-      event.target.complete();
 
       //Rerender Virtual Scroll List After Adding New Data
       this.virtualScroll.checkEnd();
       if (this.itemsData.length == this.totalPage) {
         event.target.disabled = true;
       }
-    }, 500); 
+    }, 500);  */
+
+    setTimeout(() => {
+     
+      this.getData()
+      event.target.complete();
+      console.log(this.page, this.totalPage)
+    
+      //Rerender Virtual Scroll List After Adding New Data
+      this.virtualScroll.checkEnd();
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.page == this.totalPage) {
+        event.target.disabled = true;
+      }
+    }, 500);
+
   }
 
   toggleInfiniteScroll() {

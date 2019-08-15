@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
     if(localStorage.getItem('userProvider') == ''){
 
     }else{
-      this.router.navigate(['/tabs/tab-tawaran']);
+      this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
     }
   }
 
@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
         console.log(res)
         if(res.access_token) {
           localStorage.setItem('userProvider', JSON.stringify(res));
-          this.router.navigate(['/tabs/tab-tawaran']);
+          this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
         }else{
           this.presentToast();
         }
@@ -73,7 +73,7 @@ export class LoginPage implements OnInit {
   login(){
     localStorage.setItem("adminData", 'test');
 
-    this.router.navigate(['/tabs/tab-tawaran']);
+    this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
   }
 
 }

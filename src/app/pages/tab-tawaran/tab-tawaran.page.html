@@ -1,47 +1,28 @@
-<ion-content [scrollEvents]="true" (ionScrollStart)="scrollStart($event)"  (ionScroll)="onScroll($event)" (ionScrollEnd)="scrollStop($event)">
-<!--     <div>
-        <ion-card *ngFor="let item of itemsData" >
-        <ion-card-content>
-       <div style="font-weight:bold; margin-bottom:20px;" >{{item.order.subject}}</div>
-        <div> Dibuat  : {{item.order.created_at | date: "dd MMM yyyy HH:mm a"}} - Oleh {{item.user_clients.username}}</div>
-        <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
-        <div *ngIf="item.order.projecttype == 2">Liburan</div>
-        <div *ngIf="item.order.projecttype == 3">Lalu-lintas</div>
-        <div *ngIf="item.order.projecttype == 4">Konstruksi Bangunan</div>
-        <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
-        <div>Tanggal Proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</div>
-        </ion-card-content>
-      </ion-card>
-    </div> -->
-          <ion-virtual-scroll [items]="itemsData">
-              <!-- <ion-item *virtualItem="let item"> -->
-                  <ion-card *virtualItem="let item"> 
-                      <ion-item>
-                        <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
-                        <ion-label><b>{{item.order.subject}}</b></ion-label>
-                        <ion-button fill="outline" slot="end" color="indigo">Lihat</ion-button>
-                      </ion-item>
-                    
-                      <ion-card-content >
-                          <h3 style="margin-bottom: 5px;">02 Feb 2019 User</h3>
-                          <p style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</p>
-                          <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
-                          <div *ngIf="item.order.projecttype == 2">Liburan</div>
-                          <div *ngIf="item.order.projecttype == 3">Lalu-lintas</div>
-                          <div *ngIf="item.order.projecttype == 4">Konstruksi Bangunan</div>
-                          <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
-                          <div text-left style="margin-left: -16px;">
-                            <ion-button fill="clear"  color="indigo"><b>Ikuti</b></ion-button>
-                        </div>
-                
-                        </ion-card-content>
-                      
-                    </ion-card>
-             <!--  </ion-item> -->
-            </ion-virtual-scroll>
+<ion-content>
+            <ion-virtual-scroll [items]="dataList">
+              <ion-card *virtualItem="let item"> 
+                  <ion-item>
+                    <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
+                    <ion-label><b>{{item.order.subject}}</b></ion-label>
+                    <ion-button fill="outline" slot="end" color="indigo">Lihat</ion-button>
+                  </ion-item>
+                  <ion-card-content >
+                      <h3 style="margin-bottom: 5px;">02 Feb 2019 User</h3>
+                      <p style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</p>
+                      <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
+                      <div *ngIf="item.order.projecttype == 2">Liburan</div>
+                      <div *ngIf="item.order.projecttype == 3">Lalu-lintas</div>
+                      <div *ngIf="item.order.projecttype == 4">Konstruksi Bangunan</div>
+                      <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
+                      <div text-left style="margin-left: -16px;">
+                        <ion-button fill="clear"  color="indigo"><b>Ikuti</b></ion-button>
+                    </div>
+                    </ion-card-content>
+                </ion-card>
+        </ion-virtual-scroll>
            
            
-            <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+            <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)" *ngIf="page < totalPage">
               <ion-infinite-scroll-content
                 loadingSpinner="bubbles"
                 loadingText="Loading more data...">
@@ -54,7 +35,7 @@
         <ion-row>
           <ion-col text-center>
             <ion-button fill="clear" color="indigo">
-                  <ion-icon name="move"></ion-icon>
+                  <ion-icon name="stats"></ion-icon>
                   <label>URUTKAN</label>
           </ion-button>
           </ion-col>

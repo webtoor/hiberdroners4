@@ -10,7 +10,6 @@ export class TabBerjalanPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    localStorage.clear();
 
   }
 

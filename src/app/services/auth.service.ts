@@ -13,8 +13,7 @@ let apiUrl = "http://127.0.0.1:8000/";
 export class AuthService {
   data_provider:any;
   constructor(public http:HttpClient) {
-    const data  = localStorage.getItem('userProvider');
-    this.data_provider = JSON.parse(data);
+
    }
 
   postData(data, type){
@@ -50,13 +49,13 @@ export class AuthService {
     return Observable.throw(error.status);  
   }  
 
-  getData(type){
+  getData(type, access_token){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Accept' : 'application/json',
         'Access-Control-Allow-Origin' :  '*',
-        'Authorization': 'Bearer ' + this.data_provider['access_token']
+        'Authorization': 'Bearer ' + access_token
       })
     };
     return this.http.get(apiUrl+type, httpOptions)
