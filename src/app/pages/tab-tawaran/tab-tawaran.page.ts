@@ -12,13 +12,11 @@ export class TabTawaranPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
   userDetails : any;
-  filter:any;
   loaderToShow: any;
   isShown
-  responseData
-  data_json
-  dataList
-  page : any;
+  responseData : any;
+  dataList : string[]
+  page : number;
   totalData = 0;
   totalPage = 0;
 
@@ -34,7 +32,13 @@ export class TabTawaranPage implements OnInit {
    }
 
   ngOnInit() {
-    this.FirstData();
+  }
+  ionViewDidEnter(){
+    if(!localStorage.getItem('userProvider')){
+      this.router.navigate(['/login', {replaceUrl: true}]);
+    }else{
+      this.FirstData();
+    }
   }
   doRefresh(event){
     this.page = 1;
@@ -48,7 +52,7 @@ export class TabTawaranPage implements OnInit {
         this.totalPage = this.responseData.last_page;
       }else{
         localStorage.clear();
-        this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
+        this.router.navigate(['/login', {replaceUrl: true}]);
       }
     }); 
     setTimeout(() => {
@@ -71,7 +75,7 @@ export class TabTawaranPage implements OnInit {
         this.hideLoader()
       }else{
         localStorage.clear();
-        this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
+        this.router.navigate(['/login', {replaceUrl: true}]);
         this.hideLoader()
       }
     }); 
@@ -87,7 +91,7 @@ export class TabTawaranPage implements OnInit {
           this.totalPage = this.responseData.last_page;
         }else{
           localStorage.clear();
-          this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
+          this.router.navigate(['/login', {replaceUrl: true}]);
         }
       }); 
   }
@@ -102,22 +106,7 @@ export class TabTawaranPage implements OnInit {
     //this.isShown = true;
  } */
   loadMore(event) {
-    /* setTimeout(() => {
-
-      this.getData();
-      //Hide Infinite List Loader on Complete
-      event.target.complete();
-
-
-      //Rerender Virtual Scroll List After Adding New Data
-      this.virtualScroll.checkEnd();
-      if (this.itemsData.length == this.totalPage) {
-        event.target.disabled = true;
-      }
-    }, 500);  */
-
     setTimeout(() => {
-     
       this.getData()
       event.target.complete();
       console.log(this.page, this.totalPage)
@@ -130,15 +119,14 @@ export class TabTawaranPage implements OnInit {
         event.target.disabled = true;
       }
     }, 500);
-
   }
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
-  showLoader() {
-    this.loaderToShow = this.loadingController.create({
+  async showLoader() {
+    this.loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request'
     }).then((res) => {
       res.present();
@@ -151,7 +139,10 @@ export class TabTawaranPage implements OnInit {
   }
 
   hideLoader() {
-    setTimeout(() => {
+    this.loadingController.dismiss();
+
+    /* setTimeout(() => {
       this.loadingController.dismiss();
-    }, 2000);  }
+    }, 2000);   */
+  }
 }

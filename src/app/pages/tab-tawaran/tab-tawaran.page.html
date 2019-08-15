@@ -23,7 +23,7 @@
                     </ion-card-content>
                 </ion-card>
         </ion-virtual-scroll>
-           
+     
            
             <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)" *ngIf="page < totalPage">
               <ion-infinite-scroll-content
@@ -33,7 +33,7 @@
             </ion-infinite-scroll>
      
 </ion-content>
-<ion-footer style="height: 40px; background-color: #FAFAFA" *ngIf="isShown">
+<ion-footer style="height: 40px; background-color: #FAFAFA">
     <ion-grid style="margin-top:-13px">
         <ion-row>
           <ion-col text-center>

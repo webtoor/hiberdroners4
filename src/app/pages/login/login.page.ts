@@ -29,15 +29,15 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
    
-    if(localStorage.getItem('userProvider') == ''){
-
-    }else{
+  }
+  ionViewDidEnter(){
+    if(localStorage.getItem('userProvider') ){
       this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
     }
   }
 
  
-  onFormSubmit(form: NgForm) {
+  onFormSubmit() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.loginForm.invalid) {
@@ -69,11 +69,6 @@ export class LoginPage implements OnInit {
       position: 'bottom'
     });
     toast.present();
-  }
-  login(){
-    localStorage.setItem("adminData", 'test');
-
-    this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
   }
 
 }
