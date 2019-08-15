@@ -1,4 +1,7 @@
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
             <ion-virtual-scroll [items]="dataList">
               <ion-card *virtualItem="let item"> 
                   <ion-item>
@@ -7,7 +10,7 @@
                     <ion-button fill="outline" slot="end" color="indigo">Lihat</ion-button>
                   </ion-item>
                   <ion-card-content >
-                      <h3 style="margin-bottom: 5px;">02 Feb 2019 User</h3>
+                      <h3 style="margin-bottom: 5px;">{{item.order.created_at | date: "dd MMM yyyy" }} - {{item.user_clients.username }}</h3>
                       <p style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</p>
                       <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
                       <div *ngIf="item.order.projecttype == 2">Liburan</div>

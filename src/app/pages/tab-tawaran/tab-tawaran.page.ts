@@ -36,12 +36,34 @@ export class TabTawaranPage implements OnInit {
   ngOnInit() {
     this.FirstData();
   }
+  doRefresh(event){
+    this.page = 1;
+    this.dataList = []
+    this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
+      this.responseData = res;
+      console.log(this.responseData)
+      if(this.responseData != ''){
+        this.dataList = this.dataList.concat(this.responseData.data);
+        this.totalData = this.responseData.total; 
+        this.totalPage = this.responseData.last_page;
+      }else{
+        localStorage.clear();
+        this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
+      }
+    }); 
+    setTimeout(() => {
+      this.infiniteScroll.disabled = false;
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 
    FirstData(){
     this.showLoader()
     this.page = this.page + 1;
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
+      console.log(this.responseData)
       if(this.responseData != ''){
         this.dataList = this.dataList.concat(this.responseData.data);
         this.totalData = this.responseData.total; 
