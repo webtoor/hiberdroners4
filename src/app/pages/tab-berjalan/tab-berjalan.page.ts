@@ -31,15 +31,16 @@ export class TabBerjalanPage implements OnInit {
    }
 
   ngOnInit() {
-    console.log('ngOnInit')
-  }
-  ionViewDidEnter(){
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login', {replaceUrl: true}]);
     }else{
       this.FirstData();
     }
-    console.log('ionViewDidEnter')
+    //console.log('ngOnInit')
+  }
+  ionViewDidEnter(){
+  
+    //console.log('ionViewDidEnter')
   }
   doRefresh(event){
     this.page = 1;
@@ -67,6 +68,7 @@ export class TabBerjalanPage implements OnInit {
 
    FirstData(){
     this.showLoader()
+    this.dataList = []
     this.page = 1;
     this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'] + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;

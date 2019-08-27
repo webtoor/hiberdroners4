@@ -7,7 +7,7 @@
                   <ion-item>
                     <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
                     <ion-label><b>{{item.order.subject}}</b></ion-label>
-                    <ion-button fill="outline" slot="end" color="indigo">Lihat</ion-button>
+                    <ion-button fill="outline" slot="end" color="indigo" (click)="lihatTawaran(item.order.id, item.order.subject)">Lihat</ion-button>
                   </ion-item>
                   <ion-card-content >
                       <h3 style="margin-bottom: 5px;">{{item.order.created_at | date: "dd MMM yyyy" }} - {{item.user_clients.username }}</h3>

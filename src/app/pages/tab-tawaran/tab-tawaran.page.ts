@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-tab-tawaran',
@@ -21,7 +21,7 @@ export class TabTawaranPage implements OnInit {
   totalPage = 0;
 
   constructor(public toastController: ToastController,
-    public authService: AuthService, public loadingController: LoadingController,public router : Router) {
+    public authService: AuthService, public loadingController: LoadingController, public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.page = 0;
@@ -129,6 +129,13 @@ export class TabTawaranPage implements OnInit {
 
   toggleInfiniteScroll() {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+  }
+
+  lihatTawaran(id:any, subject:any){
+    //console.log(id, subject)
+
+    this.router.navigate(['/lihat-tawaran/' + id + '/' + subject]);
+
   }
 
   async showLoader() {
