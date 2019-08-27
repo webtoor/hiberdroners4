@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-tawaran',
@@ -49,10 +49,10 @@ export class TabTawaranPage implements OnInit {
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
-      if(this.responseData != null){
-        this.dataList = this.dataList.concat(this.responseData.data);
-        this.totalData = this.responseData.total; 
-        this.totalPage = this.responseData.last_page;
+      if(this.responseData.status === '1'){
+        this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.totalData = this.responseData.data.total; 
+        this.totalPage = this.responseData.data.last_page;
       }else{
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
@@ -73,10 +73,10 @@ export class TabTawaranPage implements OnInit {
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
-      if(this.responseData != null){
-        this.dataList = this.dataList.concat(this.responseData.data);
-        this.totalData = this.responseData.total; 
-        this.totalPage = this.responseData.last_page;
+      if(this.responseData.status == '1'){
+        this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.totalData = this.responseData.data.total; 
+        this.totalPage = this.responseData.data.last_page;
         this.hideLoader()
       } else{
         localStorage.clear();
@@ -91,10 +91,10 @@ export class TabTawaranPage implements OnInit {
     this.page = this.page + 1;
       this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
         this.responseData = res;
-        if(this.responseData != null){
-          this.dataList = this.dataList.concat(this.responseData.data);
-          this.totalData = this.responseData.total; 
-          this.totalPage = this.responseData.last_page;
+        if(this.responseData.status == '1'){
+          this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.totalData = this.responseData.data.total; 
+        this.totalPage = this.responseData.data.last_page;
         }else{
           localStorage.clear();
           this.router.navigate(['/login', {replaceUrl: true}]);

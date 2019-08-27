@@ -65,7 +65,7 @@ export class AuthService {
           throw new Error('Value expected!');
         }
         //console.log(res['data'])
-        return res['data'];
+        return res;
       }),
       catchError(this.handleError)
    );

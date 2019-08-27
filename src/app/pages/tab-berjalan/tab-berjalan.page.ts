@@ -48,10 +48,10 @@ export class TabBerjalanPage implements OnInit {
     this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'] + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
-      if(this.responseData != null){
-        this.dataList = this.dataList.concat(this.responseData.data);
-        this.totalData = this.responseData.total; 
-        this.totalPage = this.responseData.last_page;
+      if(this.responseData.status === '1'){
+        this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.totalData = this.responseData.data.total; 
+        this.totalPage = this.responseData.data.last_page;
       }else{
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
@@ -73,10 +73,10 @@ export class TabBerjalanPage implements OnInit {
     this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'] + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
-      if(this.responseData != null){
-        this.dataList = this.dataList.concat(this.responseData.data);
-        this.totalData = this.responseData.total; 
-        this.totalPage = this.responseData.last_page;
+      if(this.responseData.status === '1'){
+        this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.totalData = this.responseData.data.total; 
+        this.totalPage = this.responseData.data.last_page;
         this.hideLoader()
       }else{
         localStorage.clear();
