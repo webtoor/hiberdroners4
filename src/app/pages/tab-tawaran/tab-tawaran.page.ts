@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
+import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,8 @@ export class TabTawaranPage implements OnInit {
   totalData = 0;
   totalPage = 0;
 
-  constructor(public authService: AuthService, public loadingController: LoadingController,public router : Router) {
+  constructor(public toastController: ToastController,
+    public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.page = 0;
@@ -56,7 +57,9 @@ export class TabTawaranPage implements OnInit {
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
-    }); 
+    }, (err) => {
+      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+    });
     setTimeout(() => {
       /* this.infiniteScroll.disabled = false; */
       console.log('Async operation has ended');
@@ -78,9 +81,10 @@ export class TabTawaranPage implements OnInit {
       } else{
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
-        this.hideLoader()
-      } 
-    }); 
+      }
+    }, (err) => {
+      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+    });
   } 
 
   getData(){
@@ -146,5 +150,14 @@ export class TabTawaranPage implements OnInit {
     /* setTimeout(() => {
       this.loadingController.dismiss();
     }, 2000);   */
+  }
+
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 }
