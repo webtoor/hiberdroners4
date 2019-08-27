@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 let apiUrl = "http://127.0.0.1:8000/";
-/* let apiUrl = "http://192.168.1.9:8000/"; */
+/* let apiUrl = "http://192.168.1.4:8000/"; */
 
 
 @Injectable({

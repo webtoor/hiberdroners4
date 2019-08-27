@@ -45,7 +45,7 @@ export class LoginPage implements OnInit {
     }
     this.loginForm.value['device_token'] = "asdasd"
     console.log(this.loginForm.value)
-      this.authService.login( this.loginForm.value, 'login_user')
+      this.authService.login( this.loginForm.value, 'login_provider')
       .subscribe(res => {
         console.log(res)
         if(res.access_token) {

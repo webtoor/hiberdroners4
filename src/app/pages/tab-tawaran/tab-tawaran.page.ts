@@ -32,6 +32,7 @@ export class TabTawaranPage implements OnInit {
    }
 
   ngOnInit() {
+    //console.log('ngOnInit')
   }
   ionViewDidEnter(){
     if(!localStorage.getItem('userProvider')){
@@ -39,6 +40,7 @@ export class TabTawaranPage implements OnInit {
     }else{
       this.FirstData();
     }
+    //console.log('ionViewDidEnter')
   }
   doRefresh(event){
     this.page = 1;
@@ -46,7 +48,7 @@ export class TabTawaranPage implements OnInit {
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
-      if(this.responseData != ''){
+      if(this.responseData != null){
         this.dataList = this.dataList.concat(this.responseData.data);
         this.totalData = this.responseData.total; 
         this.totalPage = this.responseData.last_page;
@@ -56,7 +58,7 @@ export class TabTawaranPage implements OnInit {
       }
     }); 
     setTimeout(() => {
-      this.infiniteScroll.disabled = false;
+      /* this.infiniteScroll.disabled = false; */
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
@@ -68,16 +70,16 @@ export class TabTawaranPage implements OnInit {
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
-      if(this.responseData != ''){
+      if(this.responseData != null){
         this.dataList = this.dataList.concat(this.responseData.data);
         this.totalData = this.responseData.total; 
         this.totalPage = this.responseData.last_page;
         this.hideLoader()
-      }else{
+      } else{
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
         this.hideLoader()
-      }
+      } 
     }); 
   } 
 
@@ -85,7 +87,7 @@ export class TabTawaranPage implements OnInit {
     this.page = this.page + 1;
       this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
         this.responseData = res;
-        if(this.responseData != ''){
+        if(this.responseData != null){
           this.dataList = this.dataList.concat(this.responseData.data);
           this.totalData = this.responseData.total; 
           this.totalPage = this.responseData.last_page;

@@ -10,7 +10,7 @@ export class TabRiwayatPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    localStorage.clear();
+    /* localStorage.clear(); */
 
   }
 
