@@ -16,13 +16,13 @@ export class AuthService {
 
    }
 
-  postData(data, type){
+  postData(data, type, access_token){
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Accept' : 'application/json',
         'Access-Control-Allow-Origin' :  '*',
-        'Authorization': 'Bearer ' + this.data_provider['access_token']
+        'Authorization': 'Bearer ' + access_token
       })
     };
     return this.http.post<any>(apiUrl+type, data, httpOptions)

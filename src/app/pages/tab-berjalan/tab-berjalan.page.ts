@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ToastController  } from '@ionic/angular';
+import { LoadingController, IonInfiniteScroll, IonVirtualScroll, AlertController,ToastController  } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -9,27 +9,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./tab-berjalan.page.scss'],
 })
 export class TabBerjalanPage implements OnInit {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+
   userDetails : any;
   loaderToShow: any;
   isShown
   responseData : any;
-  dataListIkuti : string[]
-  dataListKerja : string[]
-  page : number;
-  totalData = 0;
-  totalPage = 0;
+
   theState:boolean = false;
   public items_ikuti : any;
   public items_kerja : any;
-
-  constructor(public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
+  cancels :any =  { "id" : ""}
+  constructor(public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
-    this.page = 0;
-    this.dataListIkuti = [];
-    
   /*   for (let i = 0; i < 10; i++) { 
       this.dataListIkuti.push("Item number "+(this.dataListIkuti.length+1));
     } */
@@ -114,7 +106,39 @@ export class TabBerjalanPage implements OnInit {
   scrollStop(event) {
     //this.isShown = true;
  } */
-  
+
+ async Cancels(id:any, subject : any){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: 'Apakah anda yakin untuk berhenti mengikuti ' + subject + '?',
+    buttons: [
+      {
+        text: 'Kembali',
+        handler: () => {
+          console.log('Kembali clicked');
+        }
+      },
+      {
+        text: 'Oke',
+        handler: () => {
+           /*  this.authService.postData(this.cancels, "api/provider/v4/cancel_bid", this.userDetails['access_token']).subscribe(res => {
+            this.responseData = res;
+            console.log(this.responseData);
+            if(this.responseData['status'] == "1"){
+             this.getIkuti();
+            }else{
+               localStorage.clear();
+            }
+          });   */
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
   async showLoader() {
     this.loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request'
