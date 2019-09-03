@@ -1,9 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal-ikuti</ion-title>
+    <ion-button fill="clear" color="indigo" (click)="closeModal()" slot="end"><b>CLOSE</b></ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label position="stacked">Harga Penawaran <ion-text color="danger">*</ion-text></ion-label>
 
+    <ion-input type="number" placeholder="Masukan harga penawaran (angka)" required></ion-input>
+  </ion-item>   
+    
+    <ion-item>
+      <ion-textarea placeholder="Komentar"></ion-textarea>
+    </ion-item>
 </ion-content>

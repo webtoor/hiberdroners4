@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ToastController } from '@ionic/angular';
+import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
@@ -21,7 +21,7 @@ export class TabTawaranPage implements OnInit {
   totalData = 0;
   totalPage = 0;
 
-  constructor(public toastController: ToastController,
+  constructor(public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public loadingController: LoadingController, public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -44,6 +44,12 @@ export class TabTawaranPage implements OnInit {
   ionViewDidEnter(){
    
     //console.log('ionViewDidEnter')
+  }
+  async modalIkuti() {
+    const modal = await this.modalController.create({
+      component: ModalIkutiPage
+    });
+    return await modal.present();
   }
   doRefresh(event){
     this.page = 1;
