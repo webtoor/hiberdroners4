@@ -108,7 +108,7 @@ export class TabBerjalanPage implements OnInit {
  } */
 
  async Cancels(id:any, subject : any){
-
+  this.cancels.id = id;
   const alert = await this.alertController.create({
     header: 'Confirm!',
     message: 'Apakah anda yakin untuk berhenti mengikuti ' + subject + '?',
@@ -122,7 +122,7 @@ export class TabBerjalanPage implements OnInit {
       {
         text: 'Oke',
         handler: () => {
-           /*  this.authService.postData(this.cancels, "api/provider/v4/cancel_bid", this.userDetails['access_token']).subscribe(res => {
+            this.authService.postData(this.cancels, "api/provider/v4/cancel_bid", this.userDetails['access_token']).subscribe(res => {
             this.responseData = res;
             console.log(this.responseData);
             if(this.responseData['status'] == "1"){
@@ -130,7 +130,7 @@ export class TabBerjalanPage implements OnInit {
             }else{
                localStorage.clear();
             }
-          });   */
+          });  
         }
       }
     ]

@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
 
 @Component({
   selector: 'app-tab-tawaran',
