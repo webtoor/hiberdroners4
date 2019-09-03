@@ -74,11 +74,12 @@ export class TabTawaranPage implements OnInit {
       this.responseData = res;
       console.log(this.responseData)
       if(this.responseData.status == '1'){
+        this.hideLoader()
         this.dataList = this.dataList.concat(this.responseData.data.data);
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
-        this.hideLoader()
       } else{
+        this.hideLoader()
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
@@ -148,15 +149,15 @@ export class TabTawaranPage implements OnInit {
         console.log('Loading dismissed!');
       });
     });
-    this.hideLoader();
+    /* this.hideLoader(); */
   }
 
   hideLoader() {
-    this.loadingController.dismiss();
+    /* this.loadingController.dismiss(); */
 
-    /* setTimeout(() => {
+    setTimeout(() => {
       this.loadingController.dismiss();
-    }, 2000);   */
+    }, 1000);  
   }
 
   async presentToast(msg) {

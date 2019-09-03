@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule', canActivate : [AuthGuardService] },
   { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule', canActivate : [AuthGuardService] },
   { path: 'lihat-tawaran/:id/:subject', loadChildren: './pages/lihat-tawaran/lihat-tawaran.module#LihatTawaranPageModule', canActivate : [AuthGuardService] },
+  { path: 'account', loadChildren: './pages/account/account.module#AccountPageModule' },
 
 ];
 
