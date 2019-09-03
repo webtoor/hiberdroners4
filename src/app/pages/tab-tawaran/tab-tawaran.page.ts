@@ -33,14 +33,15 @@ export class TabTawaranPage implements OnInit {
    }
 
   ngOnInit() {
-    //console.log('ngOnInit')
-  }
-  ionViewDidEnter(){
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login', {replaceUrl: true}]);
     }else{
       this.FirstData();
     }
+    //console.log('ngOnInit')
+  }
+  ionViewDidEnter(){
+   
     //console.log('ionViewDidEnter')
   }
   doRefresh(event){
