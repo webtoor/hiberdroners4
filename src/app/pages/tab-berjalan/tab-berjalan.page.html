@@ -32,7 +32,7 @@
                 <div *ngIf="item.order.projecttype == 4">Konstruksi Bangunan</div>
                 <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
                 <div text-left style="margin-left: -16px;">
-                  <ion-button fill="clear"  color="indigo"><b>Cancel</b></ion-button>
+                  <ion-button fill="clear"  color="indigo" (click)="Cancels(item.id, item.order.subject)"><b>Cancel</b></ion-button>
               </div>
               </ion-card-content>
           </ion-card>
