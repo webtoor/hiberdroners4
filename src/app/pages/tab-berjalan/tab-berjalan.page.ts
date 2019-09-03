@@ -15,18 +15,23 @@ export class TabBerjalanPage implements OnInit {
   loaderToShow: any;
   isShown
   responseData : any;
-  dataList : string[]
+  dataListIkuti : string[]
+  dataListKerja : string[]
   page : number;
   totalData = 0;
   totalPage = 0;
+  theState:boolean = false;
+  public items_ikuti : any;
+  public items_kerja : any;
+
   constructor(public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.page = 0;
-    this.dataList = [];
+    this.dataListIkuti = [];
     
   /*   for (let i = 0; i < 10; i++) { 
-      this.dataList.push("Item number "+(this.dataList.length+1));
+      this.dataListIkuti.push("Item number "+(this.dataListIkuti.length+1));
     } */
    }
 
@@ -34,9 +39,20 @@ export class TabBerjalanPage implements OnInit {
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login', {replaceUrl: true}]);
     }else{
-      this.FirstData();
+      this.getIkuti();
     }
     //console.log('ngOnInit')
+  }
+
+  change(){
+    if(this.theState == false){
+      this.getIkuti();
+    }else if(this.theState == true){
+      this.getKerja();
+    }else{
+      this.getIkuti();
+    }
+    console.log(this.theState)
   }
   ionViewDidEnter(){
   
@@ -45,70 +61,49 @@ export class TabBerjalanPage implements OnInit {
 
   lihatBerjalan(id:any, subject:any){
     //console.log(id, subject)
-
     this.router.navigate(['/lihat-berjalan/' + id + '/' + subject]);
-
-  }
-  doRefresh(event){
-    this.page = 1;
-    this.dataList = []
-    this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'] + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
-      this.responseData = res;
-      console.log(this.responseData)
-      if(this.responseData.status === '1'){
-        this.dataList = this.dataList.concat(this.responseData.data.data);
-        this.totalData = this.responseData.data.total; 
-        this.totalPage = this.responseData.data.last_page;
-      }else{
-        localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
-      }
-    }, (err) => {
-      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
-    });
-    setTimeout(() => {
-      /* this.infiniteScroll.disabled = false; */
-      console.log('Async operation has ended');
-      event.target.complete();
-    }, 2000);
   }
 
-   FirstData(){
+   getIkuti(){
     this.showLoader()
-    this.dataList = []
-    this.page = 1;
-    this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'] + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
+    this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
       if(this.responseData.status === '1'){
-        this.dataList = this.dataList.concat(this.responseData.data.data);
-        this.totalData = this.responseData.data.total; 
-        this.totalPage = this.responseData.data.last_page;
         this.hideLoader()
+        this.items_ikuti = this.responseData['data'];
       }else{
+        this.hideLoader()
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
-        this.hideLoader()
       }
     }, (err) => {
+      this.hideLoader()
       this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
     });
   } 
 
-  getData(){
-    this.page = this.page + 1;
-      this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'] + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
-        this.responseData = res;
-        if(this.responseData != null){
-          this.dataList = this.dataList.concat(this.responseData.data);
-          this.totalData = this.responseData.total; 
-          this.totalPage = this.responseData.last_page;
-        }else{
-          localStorage.clear();
-          this.router.navigate(['/login', {replaceUrl: true}]);
-        }
-      }); 
-  }
+
+  getKerja(){
+    this.showLoader()
+    this.authService.getData('api/provider/v4/berjalan_kerja_show/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
+      this.responseData = res;
+      console.log(this.responseData)
+      if(this.responseData.status === '1'){
+        this.hideLoader()
+       this.items_kerja = this.responseData['data'];
+      }else{
+        this.hideLoader()
+        localStorage.clear();
+        this.router.navigate(['/login', {replaceUrl: true}]);
+      }
+    }, (err) => {
+      this.hideLoader()
+      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+    });
+  } 
+
+ 
 
  /*  scrollStart(event:any) { 
     //this.isShown = true;
@@ -119,26 +114,7 @@ export class TabBerjalanPage implements OnInit {
   scrollStop(event) {
     //this.isShown = true;
  } */
-  loadMore(event) {
-    setTimeout(() => {
-      this.getData()
-      event.target.complete();
-      console.log(this.page, this.totalPage)
-    
-      //Rerender Virtual Scroll List After Adding New Data
-      this.virtualScroll.checkEnd();
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.page == this.totalPage) {
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
-
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-  }
-
+  
   async showLoader() {
     this.loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request'
@@ -155,9 +131,9 @@ export class TabBerjalanPage implements OnInit {
   hideLoader() {
     this.loadingController.dismiss();
 
-    /* setTimeout(() => {
+   /*  setTimeout(() => {
       this.loadingController.dismiss();
-    }, 2000);   */
+    }, 1500);   */
   }
   async presentToast(msg) {
     const toast = await this.toastController.create({

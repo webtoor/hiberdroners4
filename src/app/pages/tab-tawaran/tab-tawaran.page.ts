@@ -65,7 +65,7 @@ export class TabTawaranPage implements OnInit {
       /* this.infiniteScroll.disabled = false; */
       console.log('Async operation has ended');
       event.target.complete();
-    }, 2000);
+    }, 500);
   }
 
    FirstData(){
