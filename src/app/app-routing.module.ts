@@ -20,13 +20,14 @@ const routes: Routes = [
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 
   { path: '', loadChildren: './pages/tabs/tabs.module#TabsPageModule', canActivate : [AuthGuardService] },
+  { path: 'account', loadChildren: './pages/account/account.module#AccountPageModule', canActivate : [AuthGuardService]  },
+
   { path: 'tab-tawaran', loadChildren: './pages/tab-tawaran/tab-tawaran.module#TabTawaranPageModule', canActivate : [AuthGuardService] },
 
   { path: 'tab-berjalan', loadChildren: './pages/tab-berjalan/tab-berjalan.module#TabBerjalanPageModule', canActivate : [AuthGuardService] },
   { path: 'tab-riwayat', loadChildren: './pages/tab-riwayat/tab-riwayat.module#TabRiwayatPageModule', canActivate : [AuthGuardService] },
   { path: 'lihat-tawaran/:id/:subject', loadChildren: './pages/lihat-tawaran/lihat-tawaran.module#LihatTawaranPageModule', canActivate : [AuthGuardService] },
-  { path: 'account', loadChildren: './pages/account/account.module#AccountPageModule' },
-  { path: 'lihat-berjalan', loadChildren: './pages/lihat-berjalan/lihat-berjalan.module#LihatBerjalanPageModule' },
+  { path: 'lihat-berjalan/:id/:subject', loadChildren: './pages/lihat-berjalan/lihat-berjalan.module#LihatBerjalanPageModule', canActivate : [AuthGuardService]  },
 
 ];
 

@@ -42,6 +42,13 @@ export class TabBerjalanPage implements OnInit {
   
     //console.log('ionViewDidEnter')
   }
+
+  lihatBerjalan(id:any, subject:any){
+    //console.log(id, subject)
+
+    this.router.navigate(['/lihat-berjalan/' + id + '/' + subject]);
+
+  }
   doRefresh(event){
     this.page = 1;
     this.dataList = []
