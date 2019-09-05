@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
+import { LoadingController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
 
 @Component({
@@ -21,7 +21,7 @@ export class TabTawaranPage implements OnInit {
   totalData = 0;
   totalPage = 0;
   refreshPage 
-  constructor(public modalController: ModalController, public toastController: ToastController,
+  constructor(public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public loadingController: LoadingController, public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -46,7 +46,6 @@ export class TabTawaranPage implements OnInit {
       this.FirstData();
       this.refreshPage = null
       console.log('ionViewWillEnter')
-
     }
   }
   async modalIkuti(id:any, subject:any) {
@@ -62,8 +61,12 @@ export class TabTawaranPage implements OnInit {
     modal.onDidDismiss().then((detail) => {
       if (detail.data === "1") {
         this.refreshPage = "1";
-        console.log(this.refreshPage)
-        this.router.navigateByUrl('/tabs/tab-berjalan')
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            refreshPage: 1
+          }
+        };
+        this.navCtrl.navigateRoot(['/tabs/tab-berjalan'], navigationExtras)
       } else if(detail.data === "404"){
         this.router.navigate(['/login', {replaceUrl: true}]);
       }

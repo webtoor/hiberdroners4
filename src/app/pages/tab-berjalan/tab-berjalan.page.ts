@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController, AlertController,ToastController  } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tab-berjalan',
@@ -19,7 +19,8 @@ export class TabBerjalanPage implements OnInit {
   public items_ikuti : any;
   public items_kerja : any;
   cancels :any =  { "id" : ""}
-  constructor(public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
+  refreshPage
+  constructor(private route: ActivatedRoute, public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
   /*   for (let i = 0; i < 10; i++) { 
@@ -35,7 +36,15 @@ export class TabBerjalanPage implements OnInit {
     }
     //console.log('ngOnInit')
   }
-
+  ionViewDidEnter(){
+    this.route.queryParams.subscribe(params => {
+      this.refreshPage = params["refreshPage"];
+    });
+    if(this.refreshPage == 1){
+      this.getIkuti()
+      console.log('refreshPage')
+    }
+  }
   change(){
     if(this.theState == false){
       this.getIkuti();
@@ -46,17 +55,13 @@ export class TabBerjalanPage implements OnInit {
     }
     console.log(this.theState)
   }
-  ionViewDidEnter(){
-  
-    //console.log('ionViewDidEnter')
-  }
 
   lihatBerjalan(id:any, subject:any){
     //console.log(id, subject)
     this.router.navigate(['/lihat-berjalan/' + id + '/' + subject]);
   }
 
-   getIkuti(){
+   async getIkuti(){
     this.showLoader()
     this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
