@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-ikuti',
@@ -10,7 +12,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ModalIkutiPage implements OnInit {
   penawaranForm : FormGroup;
   submitted = false;
-  constructor(private modalCtrl:ModalController, private formBuilder: FormBuilder, ) {
+  subject
+  userDetails : any;
+  order_id;
+  constructor(public toastController: ToastController, public authService: AuthService, private modalCtrl:ModalController, public navParams: NavParams, private formBuilder: FormBuilder, ) {
+    const data = JSON.parse(localStorage.getItem('userProvider'));
+    this.userDetails = data;
+    
+    this.order_id = this.navParams.get('id');
+    this.subject = this.navParams.get('subject');
+    console.log(this.order_id)
+    
     this.penawaranForm = this.formBuilder.group({
     'offered_price' : [null, Validators.compose([
       Validators.required,
@@ -34,5 +46,17 @@ export class ModalIkutiPage implements OnInit {
     if (this.penawaranForm.invalid) {
         return;
     }
+    this.penawaranForm.value['order_id'] = this.order_id;
+    this.penawaranForm.value['proposal_by'] = this.userDetails['id'];
+    console.log(this.penawaranForm.value)
+    /* this.authService.postData(this.penawaranForm.value, "api/provider/v4/bidding", this.userDetails['access_token']).subscribe(res => {
+      console.log(res);
+      if(res['status'] == "1"){
+       //this.getIkuti();
+      }else{
+         //localStorage.clear();
+      }
+    });  */ 
+
   }
 }

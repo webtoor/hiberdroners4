@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, IonInfiniteScroll, IonVirtualScroll, AlertController,ToastController  } from '@ionic/angular';
+import { LoadingController, AlertController,ToastController  } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 

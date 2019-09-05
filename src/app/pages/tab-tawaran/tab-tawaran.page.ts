@@ -45,9 +45,14 @@ export class TabTawaranPage implements OnInit {
    
     //console.log('ionViewDidEnter')
   }
-  async modalIkuti() {
+  async modalIkuti(id:any, subject:any) {
+
     const modal = await this.modalController.create({
-      component: ModalIkutiPage
+      component: ModalIkutiPage,
+      componentProps: {
+        id: id,
+        subject : subject
+     }
     });
     return await modal.present();
   }
