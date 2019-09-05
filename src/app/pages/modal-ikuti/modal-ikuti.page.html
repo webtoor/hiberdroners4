@@ -11,9 +11,11 @@
 
   <ion-item>
     <ion-label position="stacked">Harga Penawaran <ion-text color="danger">*</ion-text></ion-label>
-    <ion-input type="number" placeholder="Masukan harga penawaran (angka)" formControlName="offered_price"></ion-input>
+    <ion-input type="number" placeholder="Hanya masukan angka" formControlName="offered_price"></ion-input>
   </ion-item>   
-    
+      <div *ngIf="submitted && f.offered_price.errors" class="invalid-feedback">
+      <div *ngIf="f.offered_price.errors.required">Harga penawaran harus di isi dan hanya masukan angka</div>
+      </div>
     <ion-item>
       <ion-label position="stacked">Komentar</ion-label>
       <ion-textarea placeholder="Komentar" formControlName="comment"></ion-textarea>

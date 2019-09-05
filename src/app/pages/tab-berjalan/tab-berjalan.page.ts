@@ -114,13 +114,13 @@ export class TabBerjalanPage implements OnInit {
     message: 'Apakah anda yakin untuk berhenti mengikuti ' + subject + '?',
     buttons: [
       {
-        text: 'Kembali',
+        text: 'TIDAK',
         handler: () => {
           console.log('Kembali clicked');
         }
       },
       {
-        text: 'Oke',
+        text: 'YA',
         handler: () => {
             this.authService.postData(this.cancels, "api/provider/v4/cancel_bid", this.userDetails['access_token']).subscribe(res => {
             this.responseData = res;
