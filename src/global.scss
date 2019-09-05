@@ -13,14 +13,14 @@
 #rating {
     ion-icon {
       color: white;
-      font-size: 20px;
+      font-size: 25px;
       &.filled {
         color: #ffb400;
       }
     }
     ion-button{
       position: relative;
-      left: -20px;
+      left: -5px;
     }
     .sc-ion-buttons-md-s ion-button {
       --padding-top: 0;
@@ -28,7 +28,7 @@
       --padding-start: 2px;
       --padding-end: 2px;
       --box-shadow: none;
-      height: 20px;
+      height: 25px;
       font-size: 10px;
     }
   }

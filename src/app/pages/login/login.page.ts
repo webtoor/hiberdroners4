@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController,  Events, MenuController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 
@@ -17,8 +17,10 @@ export class LoginPage implements OnInit {
   constructor(public router : Router, 
     private formBuilder: FormBuilder,  
     public toastController: ToastController,
-    public authService: AuthService,) {
-    
+    public authService: AuthService,
+    public events : Events,
+    public menuCtrl : MenuController) {
+    this.menuCtrl.enable(false)
     this.loginForm = this.formBuilder.group({
       'email' : [null, [Validators.required, Validators.email]],
       'password' : [null, Validators.required],
@@ -49,6 +51,7 @@ export class LoginPage implements OnInit {
       .subscribe(res => {
         console.log(res)
         if(res.access_token) {
+          this.events.publish('email', res['email']);
           localStorage.setItem('userProvider', JSON.stringify(res));
           this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
         }else{

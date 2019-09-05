@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, Events } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -18,12 +18,25 @@ export class AppComponent {
       icon: 'contact'
     },
   ];
+
   rate
+  userDetails : any;
+  emailShow :string;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public events: Events
   ) {
+    this.userDetails = JSON.parse(localStorage.getItem('userProvider'));
+
+    if(this.userDetails){
+    this.emailShow = this.userDetails.email;
+    }
+    events.subscribe('email', (email) => {
+      this.emailShow = email;
+      //console.log(this.emails);
+    });
     this.rate = 4
     this.initializeApp();
   }
