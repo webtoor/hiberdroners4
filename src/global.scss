@@ -9,3 +9,28 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+#rating {
+    ion-icon {
+      color: white;
+      font-size: 20px;
+      &.filled {
+        color: #ffb400;
+      }
+    }
+    ion-button{
+      position: relative;
+      left: -25px;
+    }
+    .sc-ion-buttons-md-s ion-button {
+      --padding-top: 0;
+      --padding-bottom: 0;
+      --padding-start: 2px;
+      --padding-end: 2px;
+      --box-shadow: none;
+      height: 20px;
+      font-size: 10px;
+    }
+  }
+
+  

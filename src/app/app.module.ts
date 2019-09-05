@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalIkutiPageModule } from './pages/modal-ikuti/modal-ikuti.module'
+import { IonicRatingModule } from 'ionic4-rating';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { ModalIkutiPageModule } from './pages/modal-ikuti/modal-ikuti.module'
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    ModalIkutiPageModule
+    ModalIkutiPageModule,
+    IonicRatingModule
   ],
   providers: [
     StatusBar,

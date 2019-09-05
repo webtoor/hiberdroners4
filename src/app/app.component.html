@@ -7,8 +7,16 @@
                 <ion-avatar slot="start" style="height: 60px; width:60px;">
                   <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" >
                 </ion-avatar>
-                <ion-label>Item Avatar</ion-label>
+                <ion-label text-left>
+                    <rating [(ngModel)]="rate" id="rating"
+                    readonly="true" 
+                    size="default" 
+                    (ngModelChange)="onModelChange($event)">
+                   </rating>
+                    
+                </ion-label>
               </ion-item>
+           
         </ion-toolbar>
       </ion-header>
       <ion-content>
