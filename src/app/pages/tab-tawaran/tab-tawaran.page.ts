@@ -66,7 +66,7 @@ export class TabTawaranPage implements OnInit {
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
     }, (err) => {
-      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+      this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
     });
     setTimeout(() => {
       /* this.infiniteScroll.disabled = false; */
@@ -92,7 +92,8 @@ export class TabTawaranPage implements OnInit {
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
     }, (err) => {
-      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+      this.hideLoader()
+      this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
     });
   } 
 
@@ -105,9 +106,13 @@ export class TabTawaranPage implements OnInit {
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
         }else{
+          this.hideLoader()
           localStorage.clear();
           this.router.navigate(['/login', {replaceUrl: true}]);
         }
+      }, (err) => {
+        this.hideLoader()
+        this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
       }); 
   }
 

@@ -7,18 +7,20 @@
 </ion-header>
 
 <ion-content padding="true">
+    <form [formGroup]="penawaranForm" (ngSubmit)="onFormSubmit()">
+
   <ion-item>
     <ion-label position="stacked">Harga Penawaran <ion-text color="danger">*</ion-text></ion-label>
-    <ion-input type="number" placeholder="Masukan harga penawaran (angka)"></ion-input>
+    <ion-input type="number" placeholder="Masukan harga penawaran (angka)" formControlName="offered_price"></ion-input>
   </ion-item>   
     
     <ion-item>
       <ion-label position="stacked">Komentar</ion-label>
-      <ion-textarea placeholder="Komentar"></ion-textarea>
+      <ion-textarea placeholder="Komentar" formControlName="comment"></ion-textarea>
     </ion-item>
 <div style="margin-top: 40px;">
     <ion-button color="indigo" expand="block" type="submit" style="height:40px" >SUBMIT</ion-button>
-
 </div>
+</form>
 
 </ion-content>
