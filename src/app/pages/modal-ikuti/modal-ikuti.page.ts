@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams, ToastController } from '@ionic/angular';
+import { ModalController,  NavController, LoadingController, NavParams, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -15,10 +15,10 @@ export class ModalIkutiPage implements OnInit {
   subject
   userDetails : any;
   order_id;
-  constructor(public toastController: ToastController, public authService: AuthService, private modalCtrl:ModalController, public navParams: NavParams, private formBuilder: FormBuilder, ) {
+  loaderToShow
+  constructor(public loadingController: LoadingController, private navCtrl: NavController, public router: Router, public toastController: ToastController, public authService: AuthService, private modalCtrl:ModalController, public navParams: NavParams, private formBuilder: FormBuilder, ) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
-    
     this.order_id = this.navParams.get('id');
     this.subject = this.navParams.get('subject');
     console.log(this.order_id)
@@ -42,21 +42,65 @@ export class ModalIkutiPage implements OnInit {
   onFormSubmit(){
     this.submitted = true;
     // stop here if form is invalid
-    console.log(this.penawaranForm)
     if (this.penawaranForm.invalid) {
         return;
     }
     this.penawaranForm.value['order_id'] = this.order_id;
     this.penawaranForm.value['proposal_by'] = this.userDetails['id'];
     console.log(this.penawaranForm.value)
-    /* this.authService.postData(this.penawaranForm.value, "api/provider/v4/bidding", this.userDetails['access_token']).subscribe(res => {
+    this.showLoader()
+    this.authService.postData(this.penawaranForm.value, "api/provider/v4/bidding", this.userDetails['access_token']).subscribe(res => {
       console.log(res);
       if(res['status'] == "1"){
-       //this.getIkuti();
+        this.hideLoader()
+        const result = "1"
+        /* this.navCtrl.navigateRoot('/tabs/tab-berjalan'); */
+        // Double input
+        this.modalCtrl.dismiss(result);        
+      }else if(res['status'] == "2"){
+         this.hideLoader()
+         this.presentToast('Sudah mengisi tawaran ini!')
       }else{
-         //localStorage.clear();
+        this.hideLoader()
+        const result = "404"
+        this.presentToast('Access token invalid!!')
+        localStorage.clear();
+        this.modalCtrl.dismiss(result);        
       }
-    });  */ 
+    }, (err) => {
+      this.hideLoader()
+      this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
+    });   
 
   }
+
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async showLoader() {
+    this.loaderToShow = await this.loadingController.create({
+      message: 'Processing Server Request'
+    }).then((res) => {
+      res.present();
+
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+    this.hideLoader();
+  }
+
+  hideLoader() {
+    this.loadingController.dismiss();
+
+    /*  setTimeout(() => {
+      this.loadingController.dismiss();
+    }, 1000 ) */
+}
 }
