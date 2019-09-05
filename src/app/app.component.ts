@@ -7,21 +7,15 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
 
   
   public appPages = [
-    /* {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    }, */
     {
       title: 'Account',
       url: '/account',
-      icon: 'home'
+      icon: 'contact'
     },
   ];
   rate
@@ -30,6 +24,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
+    this.rate = 4
     this.initializeApp();
   }
 
