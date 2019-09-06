@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'lihat-berjalan/:id/:subject', loadChildren: './pages/lihat-berjalan/lihat-berjalan.module#LihatBerjalanPageModule', canActivate : [AuthGuardService]  },
   { path: 'modal-ikuti', loadChildren: './pages/modal-ikuti/modal-ikuti.module#ModalIkutiPageModule' },
   { path: 'lihat-riwayat/:id/:subject', loadChildren: './pages/lihat-riwayat/lihat-riwayat.module#LihatRiwayatPageModule', canActivate : [AuthGuardService] },
+  { path: 'filter-tawaran', loadChildren: './pages/filter-tawaran/filter-tawaran.module#FilterTawaranPageModule' },
 
 ];
 

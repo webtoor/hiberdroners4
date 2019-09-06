@@ -184,7 +184,7 @@ export class TabTawaranPage implements OnInit {
         //console.log('Loading dismissed!');
       });
     });
-    this.hideLoader();
+    /* this.hideLoader(); */
   }
 
   hideLoader() {
