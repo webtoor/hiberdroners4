@@ -20,7 +20,6 @@ export class LoginPage implements OnInit {
     public authService: AuthService,
     public events : Events,
     public menuCtrl : MenuController) {
-    this.menuCtrl.enable(false)
     this.loginForm = this.formBuilder.group({
       'email' : [null, [Validators.required, Validators.email]],
       'password' : [null, Validators.required],
@@ -30,13 +29,19 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
-   
+      
+  }
+
+  ionViewWillEnter(){
+    this.menuCtrl.enable(false)
   }
   ionViewDidEnter(){
     if(localStorage.getItem('userProvider') ){
       this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
     }
   }
+
+
 
  
   onFormSubmit() {

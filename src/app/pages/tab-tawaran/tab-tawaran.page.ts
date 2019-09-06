@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
+import { LoadingController,  MenuController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
@@ -22,7 +22,7 @@ export class TabTawaranPage implements OnInit {
   totalPage = 0;
   refreshPage 
   constructor(public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
-    public authService: AuthService, public loadingController: LoadingController, public router : Router) {
+    public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.page = 0;
@@ -33,6 +33,8 @@ export class TabTawaranPage implements OnInit {
    }
 
   ngOnInit() {
+    this.menuCtrl.enable(true);
+
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login', {replaceUrl: true}]);
     }else if(this.refreshPage == null){
