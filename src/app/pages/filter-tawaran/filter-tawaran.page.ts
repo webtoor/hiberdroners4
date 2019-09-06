@@ -15,5 +15,43 @@ export class FilterTawaranPage implements OnInit {
   closeModal(){
     this.modalCtrl.dismiss();
   }
+  allType() {
+    this.modalCtrl.dismiss({
+      kode : '0'
+    });
+  }
+  // Pemetaan Tanaman
+  petaTanaman() {
+    this.modalCtrl.dismiss({
+      kode : '1'
+    });
+  }
+  // Liburan
+  Liburan() {
+    this.modalCtrl.dismiss({
+      kode : '2'
+    });
+  }
+  
+  // lalu-lintas
+  laluLintas() {
+    this.modalCtrl.dismiss({
+      kode : '3'
+    });
+  }
+
+  // konsBangunan
+  konsBangunan() {
+    this.modalCtrl.dismiss({
+      kode : '4'
+    });
+  }
+
+   // Pengawasan
+   pengawasan() {
+    this.modalCtrl.dismiss({
+      kode : '5'
+    });
+  }
 
 }
