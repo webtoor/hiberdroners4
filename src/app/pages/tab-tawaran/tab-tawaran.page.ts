@@ -3,6 +3,7 @@ import { LoadingController,  MenuController, NavController, IonInfiniteScroll, I
 import { AuthService } from '../../services/auth.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
+import { FilterTawaranPage } from '../filter-tawaran/filter-tawaran.page';
 
 @Component({
   selector: 'app-tab-tawaran',
@@ -50,6 +51,7 @@ export class TabTawaranPage implements OnInit {
       console.log('ionViewWillEnter')
     }
   }
+
   async modalIkuti(id:any, subject:any) {
 
     const modal = await this.modalController.create({
@@ -72,6 +74,27 @@ export class TabTawaranPage implements OnInit {
       } else if(detail.data === "404"){
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
+   });
+    return await modal.present();
+  }
+
+
+  async modalFilter() {
+
+    const modal = await this.modalController.create({
+      component:FilterTawaranPage,
+ 
+    });
+
+    modal.onDidDismiss().then((detail) => {
+      if (detail.data === "1") {
+        this.refreshPage = "1";
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            ModalFilter: 1
+          }
+        };
+      } 
    });
     return await modal.present();
   }

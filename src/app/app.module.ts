@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalIkutiPageModule } from './pages/modal-ikuti/modal-ikuti.module'
+import { FilterTawaranPageModule} from './pages/filter-tawaran/filter-tawaran.module';
 import { IonicRatingModule } from 'ionic4-rating';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { IonicRatingModule } from 'ionic4-rating';
     HttpClientModule,
     AppRoutingModule,
     ModalIkutiPageModule,
+    FilterTawaranPageModule,
     IonicRatingModule
   ],
   providers: [

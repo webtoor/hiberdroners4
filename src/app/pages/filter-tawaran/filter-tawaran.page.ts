@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController,  NavController, LoadingController, NavParams, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-filter-tawaran',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterTawaranPage implements OnInit {
 
-  constructor() { }
+  constructor(private modalCtrl:ModalController,) { }
 
   ngOnInit() {
+  }
+  closeModal(){
+    this.modalCtrl.dismiss();
   }
 
 }
