@@ -10,7 +10,7 @@
 
 <ion-content>
   <div #map id="map">
-    <ion-spinner name="android"></ion-spinner>
+      <ion-spinner></ion-spinner>
   </div>
   <ion-item>
     <ion-label>
@@ -22,4 +22,7 @@
       <div>Hasil : {{outputs}}</div> 
     </ion-label>
   </ion-item>
+
+  <ion-button expand="block" color="indigo" fill="clear" (click)="sendEmail(items[0].order_id)"><b>Kirim KML ke email</b></ion-button>
+
 </ion-content>

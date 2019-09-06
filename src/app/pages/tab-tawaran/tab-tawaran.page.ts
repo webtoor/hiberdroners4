@@ -23,6 +23,7 @@ export class TabTawaranPage implements OnInit {
   refreshPage 
   constructor(public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
+    this.menuCtrl.enable(true);  
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     this.page = 0;
@@ -33,7 +34,6 @@ export class TabTawaranPage implements OnInit {
    }
 
   ngOnInit() {
-    this.menuCtrl.enable(true);
 
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login', {replaceUrl: true}]);
@@ -43,7 +43,7 @@ export class TabTawaranPage implements OnInit {
     //console.log('ngOnInit')
   }
   ionViewWillEnter(){
-    if(this.refreshPage == "1"){
+    if(this.refreshPage === "1"){
       this.dataList = []
       this.FirstData();
       this.refreshPage = null
@@ -99,17 +99,17 @@ export class TabTawaranPage implements OnInit {
     }, 500);
   }
 
-   FirstData(){
+   async FirstData(){
     this.showLoader()
     this.page = 1;
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
       if(this.responseData.status == '1'){
-        this.hideLoader()
         this.dataList = this.dataList.concat(this.responseData.data.data);
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
+        this.hideLoader()
       } else{
         this.hideLoader()
         localStorage.clear();
@@ -130,12 +130,10 @@ export class TabTawaranPage implements OnInit {
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
         }else{
-          this.hideLoader()
           localStorage.clear();
           this.router.navigate(['/login', {replaceUrl: true}]);
         }
       }, (err) => {
-        this.hideLoader()
         this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
       }); 
   }
@@ -186,7 +184,7 @@ export class TabTawaranPage implements OnInit {
         //console.log('Loading dismissed!');
       });
     });
-    /* this.hideLoader(); */
+    this.hideLoader();
   }
 
   hideLoader() {

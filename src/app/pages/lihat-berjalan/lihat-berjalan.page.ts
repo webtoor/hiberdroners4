@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { LoadingController, AlertController,ToastController  } from '@ionic/angular';
+
 declare var google;
 @Component({
   selector: 'app-lihat-berjalan',
@@ -19,7 +21,10 @@ export class LihatBerjalanPage implements OnInit {
   area : any;
   responseData
   items
-  constructor(private route: ActivatedRoute, public authService: AuthService) { 
+  dataEmail = {"order_id" : "", "email" : ""};
+  loaderToShow: any;
+
+  constructor(public alertCtrl: AlertController, private route: ActivatedRoute, public authService: AuthService, public toastController: ToastController,public loadingController: LoadingController) { 
     this.subject = this.route.snapshot.paramMap.get('subject');
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -30,7 +35,6 @@ export class LihatBerjalanPage implements OnInit {
     this.authService.getData('api/provider/v4/detail_show/' + this.order_id, this.userDetails['access_token']).subscribe(res => {
       console.log(res)
       this.responseData = res;
-      console.log(this.responseData);
       if(this.responseData['status'] == '1'){
         this.items = this.responseData['polygon'];
           
@@ -83,10 +87,71 @@ export class LihatBerjalanPage implements OnInit {
         console.log('err')
       }
 
-      },
-      err => console.log(err)
-    );
+    }, (err) => {
+      this.hideLoader()
+      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+    });
    
   }
 
+  sendEmail(order_id:any){
+    this.showLoader()
+    this.dataEmail.order_id = order_id;
+    this.dataEmail.email = this.userDetails['email'];
+    console.log(this.dataEmail);
+    this.authService.postData(this.dataEmail, "api/provider/v4/send_email", this.userDetails['access_token']).subscribe((res) => {
+      if (this.responseData["status"] == "1") {
+        this.hideLoader();
+        this.presentAlert();
+        return
+      }
+      else{
+        this.hideLoader();
+      }
+    }, (err) => {
+      this.hideLoader()
+      this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+    });
+  }
+
+  async presentAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Export KML',
+      subHeader: 'Export KML',
+      message: 'Silahkan cek email Anda',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+  async showLoader() {
+    this.loaderToShow = await this.loadingController.create({
+      message: 'Processing Server Request'
+    }).then((res) => {
+      res.present();
+
+      res.onDidDismiss().then((dis) => {
+        console.log('Loading dismissed!');
+      });
+    });
+    /* this.hideLoader(); */
+  }
+
+ 
+
+  hideLoader() {
+    this.loadingController.dismiss();
+
+    /* setTimeout(() => {
+      this.loadingController.dismiss();
+    }, 1500);  */ 
+  }
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
 }

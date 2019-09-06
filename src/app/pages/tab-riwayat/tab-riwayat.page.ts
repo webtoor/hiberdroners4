@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController,  MenuController, NavController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-riwayat',
@@ -36,8 +36,8 @@ export class TabRiwayatPage implements OnInit {
       this.responseData = res;
       console.log(this.responseData)
       if(this.responseData.status === '1'){
-        this.hideLoader()
         this.items_performa = this.responseData['data'];
+        this.hideLoader()
       }else{
         this.hideLoader()
         localStorage.clear();
