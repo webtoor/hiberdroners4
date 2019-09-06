@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoadingController, AlertController,ToastController  } from '@ionic/angular';
 
@@ -24,7 +24,7 @@ export class LihatBerjalanPage implements OnInit {
   dataEmail = {"order_id" : "", "email" : ""};
   loaderToShow: any;
 
-  constructor(public alertCtrl: AlertController, private route: ActivatedRoute, public authService: AuthService, public toastController: ToastController,public loadingController: LoadingController) { 
+  constructor(public router:Router, public alertCtrl: AlertController, private route: ActivatedRoute, public authService: AuthService, public toastController: ToastController,public loadingController: LoadingController) { 
     this.subject = this.route.snapshot.paramMap.get('subject');
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -84,7 +84,9 @@ export class LihatBerjalanPage implements OnInit {
          this.area = luasArea.toFixed(2)
          console.log(this.area)
       }else{
-        console.log('err')
+        this.presentToast("Access Token invalid!");
+        localStorage.clear();
+        this.router.navigate(['/login', {replaceUrl: true}]);
       }
 
     }, (err) => {
@@ -107,6 +109,9 @@ export class LihatBerjalanPage implements OnInit {
       }
       else{
         this.hideLoader();
+        this.presentToast("Access Token invalid!");
+        localStorage.clear();
+        this.router.navigate(['/login', {replaceUrl: true}]);
       }
     }, (err) => {
       this.hideLoader()

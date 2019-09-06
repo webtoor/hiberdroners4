@@ -71,6 +71,7 @@ export class TabBerjalanPage implements OnInit {
         this.items_ikuti = this.responseData['data'];
       }else{
         this.hideLoader()
+        this.presentToast("Access Token invalid!");
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
@@ -91,6 +92,7 @@ export class TabBerjalanPage implements OnInit {
        this.items_kerja = this.responseData['data'];
       }else{
         this.hideLoader()
+        this.presentToast("Access Token invalid!");
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
@@ -133,7 +135,9 @@ export class TabBerjalanPage implements OnInit {
             if(this.responseData['status'] == "1"){
              this.getIkuti();
             }else{
-               localStorage.clear();
+              this.presentToast("Access Token invalid!");
+              localStorage.clear();
+              this.router.navigate(['/login', {replaceUrl: true}]);
             }
           });  
         }

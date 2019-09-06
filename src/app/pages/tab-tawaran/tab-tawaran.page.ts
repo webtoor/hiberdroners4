@@ -86,8 +86,10 @@ export class TabTawaranPage implements OnInit {
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
       }else{
+        this.presentToast("Access Token invalid!");
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
+
       }
     }, (err) => {
       this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
@@ -112,6 +114,7 @@ export class TabTawaranPage implements OnInit {
         this.hideLoader()
       } else{
         this.hideLoader()
+        this.presentToast("Access Token invalid!");
         localStorage.clear();
         this.router.navigate(['/login', {replaceUrl: true}]);
       }
@@ -130,6 +133,7 @@ export class TabTawaranPage implements OnInit {
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
         }else{
+          this.presentToast("Access Token invalid!");
           localStorage.clear();
           this.router.navigate(['/login', {replaceUrl: true}]);
         }
