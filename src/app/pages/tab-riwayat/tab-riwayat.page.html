@@ -1,3 +1,23 @@
 <ion-content>
-
+    <div *ngFor="let item of items_performa">
+        <ion-card> 
+            <ion-item>
+              
+            </ion-item>
+            <ion-item>
+                <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
+                <ion-label><b>{{item.order.subject}}</b></ion-label>
+                <ion-button fill="outline" slot="end" color="indigo" (click)="lihatBerjalan(item.order.id, item.order.subject)">Detail</ion-button>
+              </ion-item>
+            <ion-card-content >
+                <h3 style="margin-bottom: 5px;">{{item.order.created_at | date: "dd MMM yyyy HH:mm a"}} - Oleh {{item.client.username}}</h3>
+                <p style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</p>
+                <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
+                <div *ngIf="item.order.projecttype == 2">Liburan</div>
+                <div *ngIf="item.order.projecttype == 3">Lalu-lintas</div>
+                <div *ngIf="item.order.projecttype == 4">Konstruksi Bangunan</div>
+                <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
+              </ion-card-content>
+          </ion-card>
+              </div>
 </ion-content>
