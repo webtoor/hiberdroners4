@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>lihat-riwayat</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="indigo">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/tabs/tab-riwayat"></ion-back-button>
+          </ion-buttons>
+      <ion-title>{{subject}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
 
 <ion-content>
-
+    <div #map id="map">
+        <ion-spinner name="android"></ion-spinner>
+      </div>
+      <ion-item>
+          <ion-label>
+            <div>Luas Area : {{area}} meter<sup>2</sup></div> 
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <div>Hasil : {{outputs}}</div> 
+          </ion-label>
+        </ion-item>
 </ion-content>

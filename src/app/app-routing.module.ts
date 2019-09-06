@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'lihat-tawaran/:id/:subject', loadChildren: './pages/lihat-tawaran/lihat-tawaran.module#LihatTawaranPageModule', canActivate : [AuthGuardService] },
   { path: 'lihat-berjalan/:id/:subject', loadChildren: './pages/lihat-berjalan/lihat-berjalan.module#LihatBerjalanPageModule', canActivate : [AuthGuardService]  },
   { path: 'modal-ikuti', loadChildren: './pages/modal-ikuti/modal-ikuti.module#ModalIkutiPageModule' },
-  { path: 'lihat-riwayat', loadChildren: './pages/lihat-riwayat/lihat-riwayat.module#LihatRiwayatPageModule' },
+  { path: 'lihat-riwayat/:id/:subject', loadChildren: './pages/lihat-riwayat/lihat-riwayat.module#LihatRiwayatPageModule', canActivate : [AuthGuardService] },
 
 ];
 

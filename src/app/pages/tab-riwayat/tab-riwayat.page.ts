@@ -24,6 +24,12 @@ export class TabRiwayatPage implements OnInit {
 
   }
 
+  lihatRiwayat(id:any, subject:any){
+    //console.log(id, subject)
+    this.router.navigate(['/lihat-riwayat/' + id + '/' + subject]);
+  }
+
+
   async getPerforma(){
     this.showLoader()
     this.authService.getData('api/provider/v4/order_feedback/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
