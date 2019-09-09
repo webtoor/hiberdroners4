@@ -14,7 +14,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf="theState == false">
+  <div *ngIf="theState === false">
     <div *ngIf="items_ikuti != 0; else kosong">
   <div *ngFor="let item of items_ikuti">
         <ion-card> 
@@ -48,26 +48,25 @@
               </div>
               
 
-              <div *ngIf="theState == true">
+              <div *ngIf="theState === true">
                 <div *ngIf="items_kerja != 0; else kosongs" >
 
-                <div *ngFor="let item of items_kerja">
+                <div *ngFor="let itemx of items_kerja">
                       <ion-card> 
                           <ion-item>
                             <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
-                            <ion-label><b>{{item.order.subject}}</b></ion-label>
-                            <ion-button fill="outline" slot="end" color="indigo" (click)="lihatBerjalan(item.order.id, item.order.subject)">Lihat</ion-button>
+                            <ion-label><b>{{itemx.order.subject}}</b></ion-label>
+                            <ion-button fill="outline" slot="end" color="indigo" (click)="lihatBerjalan(itemx.order.id, itemx.order.subject)">Lihat</ion-button>
                           </ion-item>
                           <ion-card-content >
-                              <h3 style="margin-bottom: 5px;">{{item.order.created_at | date: "dd MMM yyyy HH:mm a"}} - Oleh {{item.order.user_client.username}}</h3>
-                              <p style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</p>
-                              <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
-                              <div *ngIf="item.order.projecttype == 2">Liburan</div>
-                              <div *ngIf="item.order.projecttype == 3">Lalu-lintas</div>
-                              <div *ngIf="item.order.projecttype == 4">Konstruksi Bangunan</div>
-                              <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
+                              <h3 style="margin-bottom: 5px;">{{itemx.order.created_at | date: "dd MMM yyyy HH:mm a"}} - Oleh {{itemx.order.user_client.username}}</h3>
+                              <p style="margin-bottom: 5px;">Tanggal proyek : {{itemx.order.dtprojectstart | date: "dd MMM yyyy" }} - {{itemx.order.dtprojectend | date: "dd MMM yyyy" }}</p>
+                              <div *ngIf="itemx.order.projecttype == 1">Pemetaan Tanaman</div>
+                              <div *ngIf="itemx.order.projecttype == 2">Liburan</div>
+                              <div *ngIf="itemx.order.projecttype == 3">Lalu-lintas</div>
+                              <div *ngIf="itemx.order.projecttype == 4">Konstruksi Bangunan</div>
+                              <div *ngIf="itemx.order.projecttype == 5">Pengawasan</div>
                               <div text-left style="margin-left: -16px;">
-                                <ion-button fill="clear"  color="indigo"><b>Cancel</b></ion-button>
                             </div>
                             </ion-card-content>
                         </ion-card>

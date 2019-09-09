@@ -2,6 +2,7 @@
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
+      <!-- <ion-button (click)="buttonNav()"></ion-button> -->
             <ion-virtual-scroll [items]="dataList">
               <ion-card *virtualItem="let item"> 
                   <ion-item>

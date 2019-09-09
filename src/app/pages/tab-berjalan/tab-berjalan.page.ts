@@ -14,6 +14,7 @@ export class TabBerjalanPage implements OnInit {
   loaderToShow: any;
   isShown
   responseData : any;
+  responseDatas : any;
 
   theState:boolean = false;
   public items_ikuti : any;
@@ -24,34 +25,56 @@ export class TabBerjalanPage implements OnInit {
   constructor(private route: ActivatedRoute, public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
-  /*   for (let i = 0; i < 10; i++) { 
-      this.dataListIkuti.push("Item number "+(this.dataListIkuti.length+1));
-    } */
+    console.log(this.theState)
    }
 
   ngOnInit() {
-    if(!localStorage.getItem('userProvider')){
-      this.router.navigate(['/login'], {replaceUrl: true});
-    }else{
-      this.getIkuti();
-    }
-    //console.log('ngOnInit')
-  }
-  ionViewDidEnter(){
-    this.route.queryParams.subscribe(params => {
+    console.log(this.refreshPage, this.pushNotifKerja)
+    /* this.route.queryParams.subscribe(params => {
       this.refreshPage = params["refreshPage"];
       this.pushNotifKerja = params["pushNotifKerja"];
-
-    });
-    if(this.refreshPage == 1){
+    }); */
+    if((!this.refreshPage) && (!this.pushNotifKerja)){
+      this.getIkuti()
+      this.refreshPage = null
+      this.pushNotifKerja = null
+    }
+   
+   /*  if(this.refreshPage == 1){
+      this.theState = false
       this.getIkuti()
       this.refreshPage = null
       //console.log('refreshPage')
     }
     if(this.pushNotifKerja == 1){
-      this.theState = true;
-      this.getKerja();
+      this.theState = true
+      this.getKerja()
+      this.pushNotifKerja = null
+     // console.log('pushNotifKerja')
+    } */
+  }
+
+  ionViewDidEnter(){ 
+    if(!localStorage.getItem('userProvider')){
+      this.router.navigate(['/login'], {replaceUrl: true});
     }
+    console.log('ionViewDidEnter')
+    this.route.queryParams.subscribe(params => {
+      this.refreshPage = params["refreshPage"];
+      this.pushNotifKerja = 1
+    });
+
+    if(this.refreshPage == 1){
+      this.theState = false
+      this.refreshPage = null
+      //console.log('refreshPage')
+    } 
+     if(this.pushNotifKerja == 1){
+      this.theState = true
+      this.pushNotifKerja = null
+      console.log('pushNotifKerja')
+    }
+
   }
   change(){
     if(this.theState == false){
@@ -75,8 +98,8 @@ export class TabBerjalanPage implements OnInit {
       this.responseData = res;
       console.log(this.responseData)
       if(this.responseData.status === '1'){
-        this.hideLoader()
         this.items_ikuti = this.responseData['data'];
+        this.hideLoader()
       }else{
         this.hideLoader()
         this.presentToast("Access Token invalid!");
@@ -90,14 +113,15 @@ export class TabBerjalanPage implements OnInit {
   } 
 
 
-  getKerja(){
+  async getKerja(){
     this.showLoader()
     this.authService.getData('api/provider/v4/berjalan_kerja_show/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
-      this.responseData = res;
-      console.log(this.responseData)
-      if(this.responseData.status === '1'){
+      this.responseDatas = res;
+      console.log(this.responseDatas)
+      if(this.responseDatas.status === '1'){
+        this.items_kerja = this.responseDatas['data'];
         this.hideLoader()
-       this.items_kerja = this.responseData['data'];
+
       }else{
         this.hideLoader()
         this.presentToast("Access Token invalid!");
@@ -157,24 +181,27 @@ export class TabBerjalanPage implements OnInit {
 }
 
   async showLoader() {
-    this.loaderToShow = await this.loadingController.create({
-      message: 'Processing Server Request'
-    }).then((res) => {
+    const loaderToShow = await this.loadingController.create({
+      message: 'Processing Server Request',
+      duration : 1000
+    })/* .then((res) => {
       res.present();
-
+      
       res.onDidDismiss().then((dis) => {
         console.log('Loading dismissed!');
       });
-    });
-    this.hideLoader();
+    }); */
+
+    await loaderToShow.present()
+    /* this.hideLoader(); */
   }
 
   hideLoader() {
     this.loadingController.dismiss();
 
-   /*  setTimeout(() => {
+  /*  setTimeout(() => {
       this.loadingController.dismiss();
-    }, 1500);   */
+    }, 1000); */  
   }
   async presentToast(msg) {
     const toast = await this.toastController.create({

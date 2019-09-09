@@ -44,12 +44,21 @@ export class TabTawaranPage implements OnInit {
     }
    // console.log('ngOnInit')
   }
+
+  /* buttonNav(){
+     let navigationExtras: NavigationExtras = {
+          queryParams: {
+            pushNotifKerja: 1
+          }
+        };
+    this.router.navigate(['/tabs/tab-berjalan'], navigationExtras)
+  } */
   ionViewDidEnter(){
     //console.log('ionViewDidEnter')
     this.route.queryParams.subscribe(params => {
       this.pushNotif = params["pushNotif"];
     });
-    if((this.refreshPage === 1) || (this.pushNotif === 1)){
+    if((this.refreshPage == 1) || (this.pushNotif == 1)){
       this.FirstData();
       this.refreshPage = null
       this.pushNotif = null
@@ -70,7 +79,7 @@ export class TabTawaranPage implements OnInit {
 
     modal.onDidDismiss().then((detail) => {
       console.log(detail)
-      if (detail.data === 1) {
+      if (detail.data == 1) {
         this.refreshPage = 1;
         let navigationExtras: NavigationExtras = {
           queryParams: {
@@ -78,7 +87,7 @@ export class TabTawaranPage implements OnInit {
           }
         };
         this.navCtrl.navigateRoot(['/tabs/tab-berjalan'], navigationExtras)
-      } else if(detail.data === "404"){
+      } else if(detail.data == "404"){
         this.router.navigate(['/login'], {replaceUrl: true});
       }
    });
