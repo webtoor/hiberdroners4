@@ -23,7 +23,7 @@ export class TabTawaranPage implements OnInit {
   totalPage = 0;
   refreshPage 
   filter 
-  pushNotif
+  pushNotifTawaran
   constructor(private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     this.menuCtrl.enable(true);  
@@ -40,7 +40,11 @@ export class TabTawaranPage implements OnInit {
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login'], {replaceUrl: true});
     }else{
-      this.FirstData()
+      if((!this.refreshPage) && (!this.pushNotifTawaran)){
+        this.FirstData();
+        this.refreshPage = null
+        this.pushNotifTawaran = null
+      }
     }
    // console.log('ngOnInit')
   }
@@ -56,12 +60,12 @@ export class TabTawaranPage implements OnInit {
   ionViewDidEnter(){
     //console.log('ionViewDidEnter')
     this.route.queryParams.subscribe(params => {
-      this.pushNotif = params["pushNotif"];
+      this.pushNotifTawaran = params["pushNotifTawaran"];
     });
-    if((this.refreshPage == 1) || (this.pushNotif == 1)){
+    if((this.refreshPage == 1) || (this.pushNotifTawaran == 1)){
       this.FirstData();
       this.refreshPage = null
-      this.pushNotif = null
+      this.pushNotifTawaran = null
     }
 
   }
@@ -219,7 +223,7 @@ export class TabTawaranPage implements OnInit {
     this.router.navigate(['/lihat-tawaran/' + id + '/' + subject]);
 
   }
-
+  
   async showLoader() {
     this.loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request'
@@ -227,18 +231,18 @@ export class TabTawaranPage implements OnInit {
       res.present();
 
       res.onDidDismiss().then((dis) => {
-        //console.log('Loading dismissed!');
+        console.log('Loading dismissed!');
       });
     });
-    /* this.hideLoader(); */
+    this.hideLoader();
   }
 
   hideLoader() {
-    /* this.loadingController.dismiss(); */
+    this.loadingController.dismiss();
 
-    setTimeout(() => {
+   /*  setTimeout(() => {
       this.loadingController.dismiss();
-    }, 1000);  
+    }, 1500);   */
   }
 
   async presentToast(msg) {

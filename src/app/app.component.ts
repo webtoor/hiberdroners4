@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, Events, AlertController } from '@ionic/angular';
+import { Platform, Events, AlertController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
@@ -31,7 +31,8 @@ export class AppComponent {
     public events: Events,
     public fcm: FCM,
     public router : Router,
-    public alertController : AlertController
+    public alertController : AlertController,
+    public navCtrl : NavController
   ) {
     this.userDetails = JSON.parse(localStorage.getItem('userProvider'));
 
@@ -42,6 +43,7 @@ export class AppComponent {
       this.emailShow = email;
       //console.log(this.emails);
     });
+
     this.rate = 4
     this.initializeApp();
   }
@@ -49,7 +51,7 @@ export class AppComponent {
 
  fcmSetup(){
   this.fcm.onNotification().subscribe(data => {
-    console.log(data);
+    //console.log(data);
     if (data.wasTapped) {
       console.log('Received in background');
         if(data.action == 'tawaran'){
@@ -58,7 +60,7 @@ export class AppComponent {
               pushNotifTawaran: 1
             }
           };
-          this.router.navigate(['tabs/tab-tawaran'], navigationExtras)
+          this.navCtrl.navigateRoot(['tabs/tab-tawaran'], navigationExtras)
         }
         if(data.action == 'bekerja'){
           let navigationExtras: NavigationExtras = {
@@ -66,14 +68,14 @@ export class AppComponent {
               pushNotifKerja: 1
             }
           };
-          this.router.navigate(['tabs/tab-berjalan'], navigationExtras)
+          this.navCtrl.navigateRoot(['tabs/tab-berjalan'], navigationExtras)
         }
     } else {
       console.log('Received in foreground');
       if(data.action == 'tawaran'){
         this.alertTawaran(data);
       }
-      if(data.action == 'berjalan'){
+      if(data.action == 'bekerja'){
         this.alertBerjalan(data);
       }  
       

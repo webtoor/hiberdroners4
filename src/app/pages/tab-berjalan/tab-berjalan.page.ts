@@ -13,8 +13,8 @@ export class TabBerjalanPage implements OnInit {
   userDetails : any;
   loaderToShow: any;
   isShown
-  responseData : any;
-  responseDatas : any;
+  responseIkuti : any;
+  responseKerja : any;
 
   theState:boolean = false;
   public items_ikuti : any;
@@ -29,8 +29,8 @@ export class TabBerjalanPage implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.refreshPage, this.pushNotifKerja)
-    /* this.route.queryParams.subscribe(params => {
+   // console.log(this.refreshPage, this.pushNotifKerja)
+  /*   this.route.queryParams.subscribe(params => {
       this.refreshPage = params["refreshPage"];
       this.pushNotifKerja = params["pushNotifKerja"];
     }); */
@@ -39,19 +39,18 @@ export class TabBerjalanPage implements OnInit {
       this.refreshPage = null
       this.pushNotifKerja = null
     }
-   
+
    /*  if(this.refreshPage == 1){
-      this.theState = false
       this.getIkuti()
       this.refreshPage = null
       //console.log('refreshPage')
-    }
-    if(this.pushNotifKerja == 1){
-      this.theState = true
+    }  */
+    /*  if(this.pushNotifKerja == 1){
       this.getKerja()
       this.pushNotifKerja = null
-     // console.log('pushNotifKerja')
+      //console.log('pushNotifKerja')
     } */
+    
   }
 
   ionViewDidEnter(){ 
@@ -61,18 +60,18 @@ export class TabBerjalanPage implements OnInit {
     console.log('ionViewDidEnter')
     this.route.queryParams.subscribe(params => {
       this.refreshPage = params["refreshPage"];
-      this.pushNotifKerja = 1
+      this.pushNotifKerja = params["pushNotifKerja"];
     });
 
     if(this.refreshPage == 1){
-      this.theState = false
+      this.getIkuti()
       this.refreshPage = null
       //console.log('refreshPage')
     } 
      if(this.pushNotifKerja == 1){
       this.theState = true
       this.pushNotifKerja = null
-      console.log('pushNotifKerja')
+      //console.log('pushNotifKerja')
     }
 
   }
@@ -92,13 +91,13 @@ export class TabBerjalanPage implements OnInit {
     this.router.navigate(['/lihat-berjalan/' + id + '/' + subject]);
   }
 
-   async getIkuti(){
+  async getIkuti(){
     this.showLoader()
     this.authService.getData('api/provider/v4/berjalan_ikuti_show/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
-      this.responseData = res;
-      console.log(this.responseData)
-      if(this.responseData.status === '1'){
-        this.items_ikuti = this.responseData['data'];
+      this.responseIkuti = res;
+      console.log(this.responseIkuti)
+      if(this.responseIkuti.status == '1'){
+        this.items_ikuti = this.responseIkuti['data'];
         this.hideLoader()
       }else{
         this.hideLoader()
@@ -113,13 +112,13 @@ export class TabBerjalanPage implements OnInit {
   } 
 
 
-  async getKerja(){
+ async getKerja(){
     this.showLoader()
     this.authService.getData('api/provider/v4/berjalan_kerja_show/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
-      this.responseDatas = res;
-      console.log(this.responseDatas)
-      if(this.responseDatas.status === '1'){
-        this.items_kerja = this.responseDatas['data'];
+      this.responseKerja = res;
+      console.log(this.responseKerja)
+      if(this.responseKerja.status == '1'){
+        this.items_kerja = this.responseKerja['data'];
         this.hideLoader()
 
       }else{
@@ -134,20 +133,11 @@ export class TabBerjalanPage implements OnInit {
     });
   } 
 
- 
-
- /*  scrollStart(event:any) { 
-    //this.isShown = true;
-  }
-  onScroll(event:any){
-    //this.isShown = false;
-  }
-  scrollStop(event) {
-    //this.isShown = true;
- } */
 
  async Cancels(id:any, subject : any){
   this.cancels.id = id;
+  let alertRefresh = false
+
   const alert = await this.alertController.create({
     header: 'Confirm!',
     message: 'Apakah anda yakin untuk berhenti mengikuti ' + subject + '?',
@@ -162,10 +152,10 @@ export class TabBerjalanPage implements OnInit {
         text: 'YA',
         handler: () => {
             this.authService.postData(this.cancels, "api/provider/v4/cancel_bid", this.userDetails['access_token']).subscribe(res => {
-            this.responseData = res;
-            console.log(this.responseData);
-            if(this.responseData['status'] == "1"){
-             this.getIkuti();
+            //this.responseData = res;
+            //console.log(this.responseData);
+            if(res['status'] == "1"){
+               alertRefresh = true          
             }else{
               this.presentToast("Access Token invalid!");
               localStorage.clear();
@@ -176,32 +166,43 @@ export class TabBerjalanPage implements OnInit {
       }
     ]
   });
+        alert.onDidDismiss().then(() => {
+          if(alertRefresh){
+            this.getIkuti()
+          }
+        });
 
   await alert.present();
 }
 
-  async showLoader() {
+ /*  async showLoader() {
     const loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request',
       duration : 1000
-    })/* .then((res) => {
+    })
+
+    await loaderToShow.present()
+  } */
+
+  async showLoader() {
+    this.loaderToShow = await this.loadingController.create({
+      message: 'Processing Server Request'
+    }).then((res) => {
       res.present();
-      
+
       res.onDidDismiss().then((dis) => {
         console.log('Loading dismissed!');
       });
-    }); */
-
-    await loaderToShow.present()
-    /* this.hideLoader(); */
+    });
+    this.hideLoader();
   }
 
   hideLoader() {
     this.loadingController.dismiss();
 
-  /*  setTimeout(() => {
+   /*  setTimeout(() => {
       this.loadingController.dismiss();
-    }, 1000); */  
+    }, 1500);   */
   }
   async presentToast(msg) {
     const toast = await this.toastController.create({
