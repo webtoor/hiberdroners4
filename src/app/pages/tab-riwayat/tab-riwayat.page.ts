@@ -42,7 +42,7 @@ export class TabRiwayatPage implements OnInit {
         this.hideLoader()
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
     }, (err) => {
       this.hideLoader()

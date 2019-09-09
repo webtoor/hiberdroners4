@@ -90,7 +90,6 @@ export class LihatBerjalanPage implements OnInit {
       }
 
     }, (err) => {
-      this.hideLoader()
       this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
     });
    
@@ -111,10 +110,9 @@ export class LihatBerjalanPage implements OnInit {
         this.hideLoader();
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
     }, (err) => {
-      this.hideLoader()
       this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
     });
   }

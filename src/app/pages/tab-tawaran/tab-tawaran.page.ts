@@ -37,7 +37,7 @@ export class TabTawaranPage implements OnInit {
   ngOnInit() {
 
     if(!localStorage.getItem('userProvider')){
-      this.router.navigate(['/login', {replaceUrl: true}]);
+      this.router.navigate(['/login'], {replaceUrl: true});
     }else if(this.refreshPage == null){
       this.FirstData();
     }
@@ -75,7 +75,7 @@ export class TabTawaranPage implements OnInit {
         };
         this.navCtrl.navigateRoot(['/tabs/tab-berjalan'], navigationExtras)
       } else if(detail.data === "404"){
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
    });
     return await modal.present();
@@ -115,7 +115,7 @@ export class TabTawaranPage implements OnInit {
       }else{
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
 
       }
     }, (err) => {
@@ -144,7 +144,7 @@ export class TabTawaranPage implements OnInit {
         this.hideLoader()
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
     }, (err) => {
       this.hideLoader()
@@ -164,7 +164,7 @@ export class TabTawaranPage implements OnInit {
         }else{
           this.presentToast("Access Token invalid!");
           localStorage.clear();
-          this.router.navigate(['/login', {replaceUrl: true}]);
+          this.router.navigate(['/login'], {replaceUrl: true});
         }
       }, (err) => {
         this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");

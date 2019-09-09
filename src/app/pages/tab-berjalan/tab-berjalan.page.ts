@@ -30,7 +30,7 @@ export class TabBerjalanPage implements OnInit {
 
   ngOnInit() {
     if(!localStorage.getItem('userProvider')){
-      this.router.navigate(['/login', {replaceUrl: true}]);
+      this.router.navigate(['/login'], {replaceUrl: true});
     }else{
       this.getIkuti();
     }
@@ -73,7 +73,7 @@ export class TabBerjalanPage implements OnInit {
         this.hideLoader()
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
     }, (err) => {
       this.hideLoader()
@@ -94,7 +94,7 @@ export class TabBerjalanPage implements OnInit {
         this.hideLoader()
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
     }, (err) => {
       this.hideLoader()
@@ -137,7 +137,7 @@ export class TabBerjalanPage implements OnInit {
             }else{
               this.presentToast("Access Token invalid!");
               localStorage.clear();
-              this.router.navigate(['/login', {replaceUrl: true}]);
+              this.router.navigate(['/login'], {replaceUrl: true});
             }
           });  
         }

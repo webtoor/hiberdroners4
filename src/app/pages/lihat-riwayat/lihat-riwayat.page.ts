@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastController  } from '@ionic/angular';
+
 declare var google;
 @Component({
   selector: 'app-lihat-riwayat',
@@ -19,7 +21,7 @@ export class LihatRiwayatPage implements OnInit {
   area : any;
   responseData
   items
-  constructor(private route: ActivatedRoute, public authService: AuthService) { 
+  constructor(public router:Router, public toastController : ToastController,  private route: ActivatedRoute, public authService: AuthService) { 
     this.subject = this.route.snapshot.paramMap.get('subject');
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -79,13 +81,22 @@ export class LihatRiwayatPage implements OnInit {
          this.area = luasArea.toFixed(2)
          console.log(this.area)
       }else{
-        console.log('err')
-      }
+        this.presentToast("Access Token invalid!");
+        localStorage.clear();
+        this.router.navigate(['/login', {replaceUrl: true}]);      }
 
-      },
-      err => console.log(err)
-    );
+      }, (err) => {
+        this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
+      });
    
+  }
+  async presentToast(msg) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
   }
 
 }

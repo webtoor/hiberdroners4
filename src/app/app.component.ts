@@ -55,15 +55,25 @@ fcmSetup(){
     if (data.wasTapped) {
       console.log('Received in background');
         if(data.action == 'tawaran'){
-          this.router.navigate(['/tabs/tab-tawaran']);
+          let navigationExtras: NavigationExtras = {
+            queryParams: {
+              refreshPage: 1
+            }
+          };
+          this.router.navigate(['tabs/tab-tawaran'], navigationExtras)
         }
         if(data.action == 'bekerja'){
-          this.router.navigate(['/tabs/tab-berjalan']);
+          let navigationExtras: NavigationExtras = {
+            queryParams: {
+              refreshPage: 1
+            }
+          };
+          this.router.navigate(['tabs/tab-berjalan'], navigationExtras)
         }
     } else {
       console.log('Received in foreground');
       if(data.action == 'tawaran'){
-        this.alertBerjalan(data);
+        this.alertTawaran(data);
       }
       if(data.action == 'berjalan'){
         this.alertBerjalan(data);

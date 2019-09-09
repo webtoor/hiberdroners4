@@ -86,7 +86,7 @@ export class LihatTawaranPage implements OnInit {
       }else{
         this.presentToast("Access Token invalid!");
         localStorage.clear();
-        this.router.navigate(['/login', {replaceUrl: true}]);
+        this.router.navigate(['/login'], {replaceUrl: true});
       }
     }, (err) => {
       this.presentToast("Server sedang dalam perbaikan, silahkan coba lagi nanti :(");
