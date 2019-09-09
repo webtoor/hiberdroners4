@@ -53,7 +53,7 @@ export class ModalIkutiPage implements OnInit {
       console.log(res);
       if(res['status'] == "1"){
         this.hideLoader()
-        const result = "1"
+        const result = 1
         /* this.navCtrl.navigateRoot('/tabs/tab-berjalan'); */
         // Double input
         this.modalCtrl.dismiss(result);        

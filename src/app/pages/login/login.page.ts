@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
-    this.getFcm();
+    //this.getFcm();
   }
 
   getFcm(){
@@ -62,16 +62,18 @@ export class LoginPage implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
-    /* this.loginForm.value['device_token'] = "asdasd" */
-    this.loginForm.patchValue({
+    this.loginForm.value['device_token'] = "asdasd"
+   /*  this.loginForm.patchValue({
       device_token : this.token
-    });
+    }); */
       this.authService.login( this.loginForm.value, 'login_provider')
       .subscribe(res => {
         console.log(res)
         if(res.access_token) {
           this.events.publish('email', res['email']);
           localStorage.setItem('userProvider', JSON.stringify(res));
+          this.fcm.subscribeToTopic('droner_info');
+          this.fcm.subscribeToTopic('tawaran');
           this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
         }else{
           this.presentToast();

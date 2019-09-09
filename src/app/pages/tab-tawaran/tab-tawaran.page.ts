@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { LoadingController,  MenuController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
 import { FilterTawaranPage } from '../filter-tawaran/filter-tawaran.page';
 
@@ -23,7 +23,7 @@ export class TabTawaranPage implements OnInit {
   totalPage = 0;
   refreshPage 
   filter 
-  constructor(public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
+  constructor(private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     this.menuCtrl.enable(true);  
     const data = JSON.parse(localStorage.getItem('userProvider'));
@@ -32,6 +32,7 @@ export class TabTawaranPage implements OnInit {
     this.dataList = [];
     this.filter = 0;
    }
+
 
   ngOnInit() {
 
@@ -43,7 +44,10 @@ export class TabTawaranPage implements OnInit {
     //console.log('ngOnInit')
   }
   ionViewWillEnter(){
-    if(this.refreshPage === "1"){
+    this.route.queryParams.subscribe(params => {
+      this.refreshPage = params["refreshPage"];
+    });
+    if(this.refreshPage === 1){
       this.FirstData();
       this.refreshPage = null
       console.log('ionViewWillEnter')
@@ -62,8 +66,8 @@ export class TabTawaranPage implements OnInit {
     });
 
     modal.onDidDismiss().then((detail) => {
-      if (detail.data === "1") {
-        this.refreshPage = "1";
+      if (detail.data === 1) {
+        this.refreshPage = 1;
         let navigationExtras: NavigationExtras = {
           queryParams: {
             refreshPage: 1

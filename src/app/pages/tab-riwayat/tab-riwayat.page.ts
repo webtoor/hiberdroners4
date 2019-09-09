@@ -30,7 +30,7 @@ export class TabRiwayatPage implements OnInit {
   }
 
 
-  async getPerforma(){
+  getPerforma(){
     this.showLoader()
     this.authService.getData('api/provider/v4/order_feedback/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
