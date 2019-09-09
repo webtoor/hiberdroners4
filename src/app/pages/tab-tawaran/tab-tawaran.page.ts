@@ -23,6 +23,7 @@ export class TabTawaranPage implements OnInit {
   totalPage = 0;
   refreshPage 
   filter 
+  pushNotif
   constructor(private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     this.menuCtrl.enable(true);  
@@ -38,22 +39,24 @@ export class TabTawaranPage implements OnInit {
 
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login'], {replaceUrl: true});
-    }else if(this.refreshPage == null){
-      this.FirstData();
+    }else{
+      this.FirstData()
     }
-    //console.log('ngOnInit')
+   // console.log('ngOnInit')
   }
-  ionViewWillEnter(){
+  ionViewDidEnter(){
+    //console.log('ionViewDidEnter')
     this.route.queryParams.subscribe(params => {
-      this.refreshPage = params["refreshPage"];
+      this.pushNotif = params["pushNotif"];
     });
-    if(this.refreshPage === 1){
+    if((this.refreshPage === 1) || (this.pushNotif === 1)){
       this.FirstData();
       this.refreshPage = null
-      console.log('ionViewWillEnter')
+      this.pushNotif = null
     }
 
   }
+  
 
   async modalIkuti(id:any, subject:any) {
 
@@ -66,6 +69,7 @@ export class TabTawaranPage implements OnInit {
     });
 
     modal.onDidDismiss().then((detail) => {
+      console.log(detail)
       if (detail.data === 1) {
         this.refreshPage = 1;
         let navigationExtras: NavigationExtras = {

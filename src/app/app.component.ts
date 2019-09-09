@@ -46,10 +46,8 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  onModelChange(event) {
-    console.log('Your rate:', event);
-  }
-fcmSetup(){
+
+ fcmSetup(){
   this.fcm.onNotification().subscribe(data => {
     console.log(data);
     if (data.wasTapped) {
@@ -57,7 +55,7 @@ fcmSetup(){
         if(data.action == 'tawaran'){
           let navigationExtras: NavigationExtras = {
             queryParams: {
-              refreshPage: 1
+              pushNotifTawaran: 1
             }
           };
           this.router.navigate(['tabs/tab-tawaran'], navigationExtras)
@@ -65,7 +63,7 @@ fcmSetup(){
         if(data.action == 'bekerja'){
           let navigationExtras: NavigationExtras = {
             queryParams: {
-              refreshPage: 1
+              pushNotifKerja: 1
             }
           };
           this.router.navigate(['tabs/tab-berjalan'], navigationExtras)
@@ -85,6 +83,7 @@ fcmSetup(){
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.fcmSetup();
       this.splashScreen.hide();
       this.statusBar.backgroundColorByHexString('#000051');
       this.statusBar.styleBlackTranslucent();
@@ -101,7 +100,7 @@ fcmSetup(){
           handler: () => {
             let navigationExtras: NavigationExtras = {
               queryParams: {
-                refreshPage: 1
+                pushNotifTawaran: 1
               }
             };
             this.router.navigate(['tabs/tab-tawaran'], navigationExtras)
@@ -122,7 +121,7 @@ fcmSetup(){
           handler: () => {
             let navigationExtras: NavigationExtras = {
               queryParams: {
-                refreshPage: 1
+                pushNotifKerja: 1
               }
             };
             this.router.navigate(['tabs/tab-berjalan'], navigationExtras)

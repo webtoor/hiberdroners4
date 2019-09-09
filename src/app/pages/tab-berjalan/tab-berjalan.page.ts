@@ -20,6 +20,7 @@ export class TabBerjalanPage implements OnInit {
   public items_kerja : any;
   cancels :any =  { "id" : ""}
   refreshPage
+  pushNotifKerja
   constructor(private route: ActivatedRoute, public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -39,10 +40,17 @@ export class TabBerjalanPage implements OnInit {
   ionViewDidEnter(){
     this.route.queryParams.subscribe(params => {
       this.refreshPage = params["refreshPage"];
+      this.pushNotifKerja = params["pushNotifKerja"];
+
     });
     if(this.refreshPage == 1){
       this.getIkuti()
-      console.log('refreshPage')
+      this.refreshPage = null
+      //console.log('refreshPage')
+    }
+    if(this.pushNotifKerja == 1){
+      this.theState = true;
+      this.getKerja();
     }
   }
   change(){

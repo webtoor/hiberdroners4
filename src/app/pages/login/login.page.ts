@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
-    this.getFcm();
+   this.getFcm();
   }
 
   getFcm(){
@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
-    /* this.loginForm.value['device_token'] = "asdasd" */
+    //this.loginForm.value['device_token'] = "asdasd"
     this.loginForm.patchValue({
       device_token : this.token
     });
