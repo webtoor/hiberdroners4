@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Platform, Events } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public events: Events
+    public events: Events,
+    private fcm: FCM
   ) {
     this.userDetails = JSON.parse(localStorage.getItem('userProvider'));
 

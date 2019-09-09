@@ -22,6 +22,7 @@ export class TabTawaranPage implements OnInit {
   totalData = 0;
   totalPage = 0;
   refreshPage 
+  filter 
   constructor(public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     this.menuCtrl.enable(true);  
@@ -29,9 +30,7 @@ export class TabTawaranPage implements OnInit {
     this.userDetails = data;
     this.page = 0;
     this.dataList = [];
-  /*   for (let i = 0; i < 10; i++) { 
-      this.dataList.push("Item number "+(this.dataList.length+1));
-    } */
+    this.filter = 0;
    }
 
   ngOnInit() {
@@ -45,11 +44,11 @@ export class TabTawaranPage implements OnInit {
   }
   ionViewWillEnter(){
     if(this.refreshPage === "1"){
-      this.dataList = []
       this.FirstData();
       this.refreshPage = null
       console.log('ionViewWillEnter')
     }
+
   }
 
   async modalIkuti(id:any, subject:any) {
@@ -86,20 +85,21 @@ export class TabTawaranPage implements OnInit {
  
     });
 
-    modal.onDidDismiss().then((detail) => {
-      if (detail.data === "1") {
-        this.refreshPage = "1";
-        let navigationExtras: NavigationExtras = {
-          queryParams: {
-            ModalFilter: 1
-          }
-        };
+    modal.onDidDismiss().then((kode) => {
+      if (kode.data) {
+        this.page = 0;
+        this.totalData = 0;
+        this.totalPage = 0;
+        console.log(kode.data.kode)
+        this.filter = kode.data.kode;
+        this.FirstData();
       } 
    });
     return await modal.present();
   }
   doRefresh(event){
     this.page = 1;
+    this.filter = 0;
     this.dataList = []
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
@@ -125,9 +125,10 @@ export class TabTawaranPage implements OnInit {
   }
 
    async FirstData(){
+    this.dataList = [];
     this.showLoader()
     this.page = 1;
-    this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
+    this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + this.filter + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
       console.log(this.responseData)
       if(this.responseData.status == '1'){
@@ -148,8 +149,9 @@ export class TabTawaranPage implements OnInit {
   } 
 
   getData(){
+    console.log(this.page)
     this.page = this.page + 1;
-      this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + '0?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
+      this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + this.filter + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
         this.responseData = res;
         if(this.responseData.status == '1'){
           this.dataList = this.dataList.concat(this.responseData.data.data);

@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalIkutiPageModule } from './pages/modal-ikuti/modal-ikuti.module'
 import { FilterTawaranPageModule} from './pages/filter-tawaran/filter-tawaran.module';
 import { IonicRatingModule } from 'ionic4-rating';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,11 +28,12 @@ import { IonicRatingModule } from 'ionic4-rating';
     AppRoutingModule,
     ModalIkutiPageModule,
     FilterTawaranPageModule,
-    IonicRatingModule
+    IonicRatingModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }
   ],
   bootstrap: [AppComponent]

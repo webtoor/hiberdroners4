@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController,  Events, MenuController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 @Component({
@@ -13,28 +14,37 @@ import { AuthService } from '../../services/auth.service';
 export class LoginPage implements OnInit {
   loginForm : FormGroup;
   submitted = false;
-
+  token
   constructor(public router : Router, 
     private formBuilder: FormBuilder,  
     public toastController: ToastController,
     public authService: AuthService,
     public events : Events,
-    public menuCtrl : MenuController) {
+    public menuCtrl : MenuController,
+    public fcm: FCM) {
     this.loginForm = this.formBuilder.group({
       'email' : [null, [Validators.required, Validators.email]],
       'password' : [null, Validators.required],
+      'device_token' : [null] 
     });
 
 
    }
 
   ngOnInit() {
-      
+    this.getFcm();
+  }
+
+  getFcm(){
+    this.fcm.getToken().then(token => {
+    this.token = token
+    });
   }
 
   ionViewWillEnter(){
     this.menuCtrl.enable(false)
   }
+
   ionViewDidEnter(){
     if(localStorage.getItem('userProvider') ){
       this.router.navigate(['/tabs/tab-tawaran', {replaceUrl: true}]);
@@ -47,11 +57,15 @@ export class LoginPage implements OnInit {
   onFormSubmit() {
     this.submitted = true;
     // stop here if form is invalid
+    //alert(this.loginForm.value['device_token'])
+
     if (this.loginForm.invalid) {
         return;
     }
-    this.loginForm.value['device_token'] = "asdasd"
-    console.log(this.loginForm.value)
+    /* this.loginForm.value['device_token'] = "asdasd" */
+    this.loginForm.patchValue({
+      device_token : this.token
+    });
       this.authService.login( this.loginForm.value, 'login_provider')
       .subscribe(res => {
         console.log(res)
