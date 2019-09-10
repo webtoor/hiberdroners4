@@ -12,13 +12,13 @@ export class TabBerjalanPage implements OnInit {
 
   userDetails : any;
   loaderToShow: any;
-  isShown
+  isShown;
   responseIkuti : any;
   responseKerja : any;
 
   theState:boolean = false;
-  public items_ikuti : any;
-  public items_kerja : any;
+  public items_ikuti : []
+  public items_kerja : []
   cancels :any =  { "id" : ""}
   refreshPage;
   pushNotifKerja; 
@@ -28,6 +28,7 @@ export class TabBerjalanPage implements OnInit {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
     console.log(this.theState)
+    console.log(this.items_ikuti)
    }
 
   ngOnInit() {
@@ -38,8 +39,8 @@ export class TabBerjalanPage implements OnInit {
     }); */
     if((!this.refreshPage) && (!this.pushNotifKerja)){
       this.getIkuti()
-      this.refreshPage = null
-      this.pushNotifKerja = null
+      this.refreshPage = null;
+      this.pushNotifKerja = null;
     }
 
    /*  if(this.refreshPage == 1){
@@ -52,7 +53,6 @@ export class TabBerjalanPage implements OnInit {
       this.pushNotifKerja = null
       //console.log('pushNotifKerja')
     } */
-    
   }
 
   ionViewDidEnter(){ 

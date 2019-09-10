@@ -2,7 +2,10 @@
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
+
       <!-- <ion-button (click)="buttonNav()"></ion-button> -->
+
+      <div *ngIf="dataList != 0; else loader">
             <ion-virtual-scroll [items]="dataList">
               <ion-card *virtualItem="let item"> 
                   <ion-item>
@@ -32,7 +35,14 @@
                 loadingText="Loading more data...">
               </ion-infinite-scroll-content>
             </ion-infinite-scroll>
-     
+          </div>
+          <ng-template #loader>
+              <ion-card>
+                  <ion-card-content>
+                    <p text-center style="font-weight:bold">Belum Ada Tawaran</p>
+                  </ion-card-content>
+            </ion-card>
+            </ng-template>
 </ion-content>
 <ion-footer style="height: 40px; background-color: #FAFAFA">
     <ion-grid style="margin-top:-13px">

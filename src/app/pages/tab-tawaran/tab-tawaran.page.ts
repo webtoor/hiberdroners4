@@ -36,22 +36,7 @@ export class TabTawaranPage implements OnInit, OnDestroy, AfterViewInit {
     this.filter = 0;
    }
 
-
-  ngOnInit() {
-
-    if(!localStorage.getItem('userProvider')){
-      this.router.navigate(['/login'], {replaceUrl: true});
-    }else{
-      if((!this.refreshPage) && (!this.pushNotifTawaran)){
-        this.FirstData();
-        this.refreshPage = null
-        this.pushNotifTawaran = null
-      }
-    }
-   // console.log('ngOnInit')
-  }
-
-  ngAfterViewInit() {
+   ngAfterViewInit() {
     this.backButtonSubscription = this.platform.backButton.subscribe(() => {
       this.counts++
       if((window.location.pathname == '/tabs/tab-tawaran') || (window.location.pathname == '/tabs/tab-berjalan') || (window.location.pathname == '/tabs/tab-riwayat')){
@@ -69,6 +54,20 @@ export class TabTawaranPage implements OnInit, OnDestroy, AfterViewInit {
  
   ngOnDestroy() {
     this.backButtonSubscription.unsubscribe();
+  }
+
+  ngOnInit() {
+
+    if(!localStorage.getItem('userProvider')){
+      this.router.navigate(['/login'], {replaceUrl: true});
+    }else{
+      if((!this.refreshPage) && (!this.pushNotifTawaran)){
+        this.FirstData();
+        this.refreshPage = null
+        this.pushNotifTawaran = null
+      }
+    }
+   // console.log('ngOnInit')
   }
 
   /* buttonNav(){
