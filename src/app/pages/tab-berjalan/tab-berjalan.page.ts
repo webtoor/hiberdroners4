@@ -22,6 +22,7 @@ export class TabBerjalanPage implements OnInit {
   cancels :any =  { "id" : ""}
   refreshPage
   pushNotifKerja
+  alertRefresh:boolean = false;
   constructor(private route: ActivatedRoute, public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -136,7 +137,6 @@ export class TabBerjalanPage implements OnInit {
 
  async Cancels(id:any, subject : any){
   this.cancels.id = id;
-  let alertRefresh = false
 
   const alert = await this.alertController.create({
     header: 'Confirm!',
@@ -155,7 +155,8 @@ export class TabBerjalanPage implements OnInit {
             //this.responseData = res;
             //console.log(this.responseData);
             if(res['status'] == "1"){
-               alertRefresh = true          
+               this.alertRefresh = true   
+               console.log(this.alertRefresh)       
             }else{
               this.presentToast("Access Token invalid!");
               localStorage.clear();
@@ -167,8 +168,9 @@ export class TabBerjalanPage implements OnInit {
     ]
   });
         alert.onDidDismiss().then(() => {
-          if(alertRefresh){
+          if(this.alertRefresh == true){
             this.getIkuti()
+            this.alertRefresh = false
           }
         });
 
