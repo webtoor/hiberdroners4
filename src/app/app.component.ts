@@ -43,8 +43,15 @@ export class AppComponent {
       this.emailShow = email;
       //console.log(this.emails);
     });
-
-    this.rate = 4
+    events.subscribe('ratingAll', (ratingAll) => {
+      //console.log(rate)
+    if(ratingAll == parseInt(ratingAll)){
+      this.rate = ratingAll + '.0'
+    }else{
+      this.rate = ratingAll 
+    }
+    });
+    //this.rate = 4
     this.initializeApp();
   }
 

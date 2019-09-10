@@ -15,9 +15,19 @@ export class TabsPage implements OnInit {
    }
 
   ngOnInit() {
+    this.getRating()
   }
   getRating(){
+    this.authService.getData('api/provider/v4/get_rating/' + this.userDetails['id'], this.userDetails['access_token']).subscribe(res => {
+      console.log(res)
+      if(res["status"] == "1"){
+        this.events.publish('ratingAll', res['data']['total_rating']);
+      }else{
     
+      }
+    }, (err) => {
+   
+    });
   }
 
 }
