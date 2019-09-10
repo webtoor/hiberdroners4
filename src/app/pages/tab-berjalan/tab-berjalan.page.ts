@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { LoadingController, AlertController,ToastController  } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,9 +20,10 @@ export class TabBerjalanPage implements OnInit {
   public items_ikuti : any;
   public items_kerja : any;
   cancels :any =  { "id" : ""}
-  refreshPage
-  pushNotifKerja
+  refreshPage;
+  pushNotifKerja; 
   alertRefresh:boolean = false;
+
   constructor(private route: ActivatedRoute, public alertController: AlertController, public toastController: ToastController, public authService: AuthService, public loadingController: LoadingController,public router : Router) {
     const data = JSON.parse(localStorage.getItem('userProvider'));
     this.userDetails = data;
@@ -58,6 +59,7 @@ export class TabBerjalanPage implements OnInit {
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login'], {replaceUrl: true});
     }
+    
     console.log('ionViewDidEnter')
     this.route.queryParams.subscribe(params => {
       this.refreshPage = params["refreshPage"];
@@ -151,12 +153,11 @@ export class TabBerjalanPage implements OnInit {
       {
         text: 'YA',
         handler: () => {
+          this.alertRefresh = true
             this.authService.postData(this.cancels, "api/provider/v4/cancel_bid", this.userDetails['access_token']).subscribe(res => {
-            //this.responseData = res;
-            //console.log(this.responseData);
-            if(res['status'] == "1"){
-               this.alertRefresh = true   
-               console.log(this.alertRefresh)       
+            if(res['status'] === '1'){
+               console.log(res)  
+
             }else{
               this.presentToast("Access Token invalid!");
               localStorage.clear();
@@ -170,23 +171,26 @@ export class TabBerjalanPage implements OnInit {
         alert.onDidDismiss().then(() => {
           if(this.alertRefresh == true){
             this.getIkuti()
-            this.alertRefresh = false
+            console.log('Refresh');       
+
           }
+          //console.log('Cancel');       
+
         });
 
   await alert.present();
 }
 
- /*  async showLoader() {
+  async showLoader() {
     const loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request',
       duration : 1000
     })
 
     await loaderToShow.present()
-  } */
+  }
 
-  async showLoader() {
+  /* async showLoader() {
     this.loaderToShow = await this.loadingController.create({
       message: 'Processing Server Request'
     }).then((res) => {
@@ -196,8 +200,8 @@ export class TabBerjalanPage implements OnInit {
         console.log('Loading dismissed!');
       });
     });
-    this.hideLoader();
-  }
+    //this.hideLoader();
+  } */
 
   hideLoader() {
     this.loadingController.dismiss();

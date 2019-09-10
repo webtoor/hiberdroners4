@@ -1,5 +1,5 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { LoadingController,  MenuController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
+import { Component, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Platform, LoadingController,  MenuController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
@@ -10,7 +10,7 @@ import { FilterTawaranPage } from '../filter-tawaran/filter-tawaran.page';
   templateUrl: './tab-tawaran.page.html',
   styleUrls: ['./tab-tawaran.page.scss'],
 })
-export class TabTawaranPage implements OnInit {
+export class TabTawaranPage implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
   userDetails : any;
@@ -24,7 +24,9 @@ export class TabTawaranPage implements OnInit {
   refreshPage 
   filter 
   pushNotifTawaran
-  constructor(private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
+  backButtonSubscription
+  counts :number = 0;
+  constructor(private platform: Platform, private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     this.menuCtrl.enable(true);  
     const data = JSON.parse(localStorage.getItem('userProvider'));
@@ -47,6 +49,26 @@ export class TabTawaranPage implements OnInit {
       }
     }
    // console.log('ngOnInit')
+  }
+
+  ngAfterViewInit() {
+    this.backButtonSubscription = this.platform.backButton.subscribe(() => {
+      this.counts++
+      if((window.location.pathname == '/tabs/tab-tawaran') || (window.location.pathname == '/tabs/tab-berjalan') || (window.location.pathname == '/tabs/tab-riwayat')){
+        if(this.counts == 2){
+          navigator['app'].exitApp();
+          this.counts = 0;
+        }
+        this.presentToast('Tekan sekali lagi untuk keluar')
+      }else{
+        this.counts = 0
+        window.history.back();
+      }
+    }); 
+  }
+ 
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
   }
 
   /* buttonNav(){

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController,  NavController, LoadingController, NavParams, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-filter-tawaran',
