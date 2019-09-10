@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Events } from '@ionic/angular';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-tabs',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
-
-  constructor() { }
+  userDetails
+  constructor(public authService: AuthService, public events : Events) {
+    const data = JSON.parse(localStorage.getItem('userProvider'));
+    this.userDetails = data;
+   }
 
   ngOnInit() {
+  }
+  getRating(){
+    
   }
 
 }
