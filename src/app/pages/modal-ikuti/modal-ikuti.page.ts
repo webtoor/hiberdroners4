@@ -84,23 +84,19 @@ export class ModalIkutiPage implements OnInit {
   }
 
   async showLoader() {
-    this.loaderToShow = await this.loadingController.create({
-      message: 'Processing Server Request'
-    }).then((res) => {
-      res.present();
+    const loaderToShow = await this.loadingController.create({
+      message: 'Processing Server Request',
+      duration : 1000
+    })
 
-      res.onDidDismiss().then((dis) => {
-        console.log('Loading dismissed!');
-      });
-    });
-    this.hideLoader();
+    await loaderToShow.present()
   }
 
   hideLoader() {
     this.loadingController.dismiss();
 
-    /*  setTimeout(() => {
+   /*  setTimeout(() => {
       this.loadingController.dismiss();
-    }, 1000 ) */
-}
+    }, 1500);   */
+  }
 }

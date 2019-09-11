@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-/* let apiUrl = "http://127.0.0.1:8000/"; */
-let apiUrl = "http://192.168.1.7:8000/";
+//let apiUrl = "http://127.0.0.1:8000/"; 
+//let apiUrl = "http://192.168.1.7:8000/";
+let apiUrl = "http://hiber.eidaramata.com/public/";
+
 
 
 @Injectable({

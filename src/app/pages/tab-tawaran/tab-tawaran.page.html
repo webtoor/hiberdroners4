@@ -5,9 +5,10 @@
 
       <!-- <ion-button (click)="buttonNav()"></ion-button> -->
 
-      <div *ngIf="dataList != 0; else loader">
+      <div *ngIf="showMessage?.length > 0; else loader">
             <ion-virtual-scroll [items]="dataList">
-              <ion-card *virtualItem="let item"> 
+              <div *virtualItem="let item" style="margin-bottom: -10px;">
+              <ion-card> 
                   <ion-item>
                     <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
                     <ion-label><b>{{item.order.subject}}</b></ion-label>
@@ -23,13 +24,14 @@
                       <div *ngIf="item.order.projecttype == 5">Pengawasan</div>
                       <div text-left style="margin-left: -16px;">
                         <ion-button fill="clear"  color="indigo" (click)="modalIkuti(item.order.id, item.order.subject)"><b>Ikuti</b></ion-button>
-                    </div>
+                      </div>
                     </ion-card-content>
                 </ion-card>
+              </div>
         </ion-virtual-scroll>
      
            
-            <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)" *ngIf="page < totalPage">
+            <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="page < totalPage">
               <ion-infinite-scroll-content
                 loadingSpinner="bubbles"
                 loadingText="Loading more data...">
@@ -39,7 +41,7 @@
           <ng-template #loader>
               <ion-card>
                   <ion-card-content>
-                    <p text-center style="font-weight:bold">Belum Ada Tawaran</p>
+                    <p text-center style="font-weight:bold">Data tidak ditemukan :(</p>
                   </ion-card-content>
             </ion-card>
             </ng-template>

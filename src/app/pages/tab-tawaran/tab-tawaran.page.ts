@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Platform, LoadingController,  MenuController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
+import { LoadingController,  MenuController, NavController, IonInfiniteScroll, IonVirtualScroll, ModalController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { ModalIkutiPage } from '../modal-ikuti/modal-ikuti.page';
@@ -17,14 +17,15 @@ export class TabTawaranPage implements OnInit {
   loaderToShow: any;
   isShown
   responseData : any;
-  dataList : string[]
+  dataList : any;
   page : number;
   totalData = 0;
   totalPage = 0;
   refreshPage 
   filter 
   pushNotifTawaran
-  constructor(private platform: Platform, private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
+  showMessage
+  constructor(private route: ActivatedRoute, public navCtrl :NavController, public modalController: ModalController, public toastController: ToastController,
     public authService: AuthService, public menuCtrl: MenuController,public loadingController: LoadingController, public router : Router) {
     this.menuCtrl.enable(true);  
     const data = JSON.parse(localStorage.getItem('userProvider'));
@@ -37,7 +38,7 @@ export class TabTawaranPage implements OnInit {
  
 
   ngOnInit() {
-
+    
     if(!localStorage.getItem('userProvider')){
       this.router.navigate(['/login'], {replaceUrl: true});
     }else{
@@ -50,14 +51,6 @@ export class TabTawaranPage implements OnInit {
    // console.log('ngOnInit')
   }
 
-  /* buttonNav(){
-     let navigationExtras: NavigationExtras = {
-          queryParams: {
-            pushNotifKerja: 1
-          }
-        };
-    this.router.navigate(['/tabs/tab-berjalan'], navigationExtras)
-  } */
   ionViewDidEnter(){
     //console.log('ionViewDidEnter')
     this.route.queryParams.subscribe(params => {
@@ -146,17 +139,19 @@ export class TabTawaranPage implements OnInit {
     }, 500);
   }
 
-   async FirstData(){
+   FirstData(){
     this.dataList = [];
     this.showLoader()
     this.page = 1;
     this.authService.getData('api/provider/v4/tawaran_show/' + this.userDetails['id'] + '/' + this.filter + '?page=' + this.page, this.userDetails['access_token']).subscribe(res => {
       this.responseData = res;
-      console.log(this.responseData)
+     // console.log(this.responseData)
       if(this.responseData.status == '1'){
-        this.dataList = this.dataList.concat(this.responseData.data.data);
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
+        this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.showMessage = this.dataList;
+        console.log(this.showMessage)
         this.hideLoader()
       } else{
         this.hideLoader()
@@ -225,17 +220,13 @@ export class TabTawaranPage implements OnInit {
 
   }
   
-  async showLoader() {
-    this.loaderToShow = await this.loadingController.create({
-      message: 'Processing Server Request'
-    }).then((res) => {
-      res.present();
+   async showLoader() {
+    const loaderToShow = await this.loadingController.create({
+      message: 'Processing Server Request',
+      duration : 1000
+    })
 
-      res.onDidDismiss().then((dis) => {
-        console.log('Loading dismissed!');
-      });
-    });
-    this.hideLoader();
+    await loaderToShow.present()
   }
 
   hideLoader() {

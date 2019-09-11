@@ -68,7 +68,7 @@ export class TabBerjalanPage implements OnInit {
 
     if(this.refreshPage == 1){
       this.theState = false
-      //this.getIkuti()
+      this.change()
       this.refreshPage = null
       //console.log('refreshPage')
     } 
