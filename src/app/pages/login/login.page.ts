@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
-   //this.getFcm();
+   this.getFcm();
   }
 
   getFcm(){
@@ -63,9 +63,9 @@ export class LoginPage implements OnInit {
         return;
     }
     this.loginForm.value['device_token'] = "asdasd"
-    /* this.loginForm.patchValue({
+    this.loginForm.patchValue({
       device_token : this.token
-    }); */
+    });
       this.authService.login( this.loginForm.value, 'login_provider')
       .subscribe(res => {
         console.log(res)
