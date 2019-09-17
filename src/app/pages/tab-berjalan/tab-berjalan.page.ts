@@ -74,6 +74,7 @@ export class TabBerjalanPage implements OnInit {
     } 
      if(this.pushNotifKerja == 1){
       this.theState = true
+      this.change()
       this.pushNotifKerja = null
       //console.log('pushNotifKerja')
     }

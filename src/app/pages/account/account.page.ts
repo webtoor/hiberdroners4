@@ -21,7 +21,8 @@ export class AccountPage implements OnInit {
   logout(){
      //Api Token Logout
      this.authService.getData("api/logout", this.userDetails['access_token']).subscribe((res) =>{
-       if(res['success'] == true){
+      console.log(res) 
+      if(res['success'] == true){
         localStorage.clear();
        }
        else{

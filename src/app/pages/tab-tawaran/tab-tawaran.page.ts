@@ -121,6 +121,7 @@ export class TabTawaranPage implements OnInit {
       console.log(this.responseData)
       if(this.responseData.status == '1'){
         this.dataList = this.dataList.concat(this.responseData.data.data);
+        this.showMessage = this.dataList;
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
       }else{
@@ -147,10 +148,10 @@ export class TabTawaranPage implements OnInit {
       this.responseData = res;
      // console.log(this.responseData)
       if(this.responseData.status == '1'){
-        this.totalData = this.responseData.data.total; 
-        this.totalPage = this.responseData.data.last_page;
         this.dataList = this.dataList.concat(this.responseData.data.data);
         this.showMessage = this.dataList;
+        this.totalData = this.responseData.data.total; 
+        this.totalPage = this.responseData.data.last_page;
         console.log(this.showMessage)
         this.hideLoader()
       } else{
@@ -172,6 +173,7 @@ export class TabTawaranPage implements OnInit {
         this.responseData = res;
         if(this.responseData.status == '1'){
           this.dataList = this.dataList.concat(this.responseData.data.data);
+          this.showMessage = this.dataList;
         this.totalData = this.responseData.data.total; 
         this.totalPage = this.responseData.data.last_page;
         }else{

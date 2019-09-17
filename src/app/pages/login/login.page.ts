@@ -51,8 +51,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-
-
  
   onFormSubmit() {
     this.submitted = true;
@@ -62,7 +60,7 @@ export class LoginPage implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
-    this.loginForm.value['device_token'] = "asdasd"
+    //this.loginForm.value['device_token'] = "asdasd"
     this.loginForm.patchValue({
       device_token : this.token
     });
@@ -76,19 +74,19 @@ export class LoginPage implements OnInit {
           this.fcm.subscribeToTopic('tawaran');
           this.router.navigate(['/tabs/tab-tawaran'], {replaceUrl: true});
         }else{
-          this.presentToast();
+          this.presentToast('Anda memasukkan Email dan Password yang salah. Isi dengan data yang benar dan coba lagi',);
         }
       }, (err) => {
-        console.log(err);
+        this.presentToast("Server sedang dalam perbaikan, silakan coba lagi nanti :(");
       });
 
 }
 
   get f() { return this.loginForm.controls; }
 
-  async presentToast() {
+  async presentToast(msg) {
     const toast = await this.toastController.create({
-      message: 'Anda memasukkan Email dan Password yang salah. Isi dengan data yang benar dan coba lagi',
+      message: msg,
       duration: 3000,
       position: 'bottom'
     });

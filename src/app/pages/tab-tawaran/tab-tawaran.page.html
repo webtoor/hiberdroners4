@@ -8,15 +8,15 @@
       <div *ngIf="showMessage?.length > 0; else loader">
             <ion-virtual-scroll [items]="dataList">
               <div *virtualItem="let item" style="margin-bottom: -10px;">
-              <ion-card> 
+              <ion-card > 
                   <ion-item>
                     <ion-icon name="pin" slot="start" style="color:#4ebaaa;"></ion-icon>
                     <ion-label><b>{{item.order.subject}}</b></ion-label>
                     <ion-button fill="outline" slot="end" color="indigo" (click)="lihatTawaran(item.order.id, item.order.subject)">Lihat</ion-button>
                   </ion-item>
-                  <ion-card-content >
+                  <ion-card-content>
                       <h3 style="margin-bottom: 5px;">{{item.order.created_at | date: "dd MMM yyyy" }} - {{item.user_clients.username }}</h3>
-                      <p style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</p>
+                      <div style="margin-bottom: 5px;">Tanggal proyek : {{item.order.dtprojectstart | date: "dd MMM yyyy" }} - {{item.order.dtprojectend | date: "dd MMM yyyy" }}</div>
                       <div *ngIf="item.order.projecttype == 1">Pemetaan Tanaman</div>
                       <div *ngIf="item.order.projecttype == 2">Liburan</div>
                       <div *ngIf="item.order.projecttype == 3">Lalu-lintas</div>
@@ -46,8 +46,8 @@
             </ion-card>
             </ng-template>
 </ion-content>
-<ion-footer style="height: 40px; background-color: #FAFAFA">
-    <ion-grid style="margin-top:-13px">
+<ion-footer style="height: 45px; background-color: #FAFAFA">
+    <ion-grid style="margin-top:-8px">
         <ion-row>
           <ion-col text-center>
             <ion-button fill="clear" color="indigo">
