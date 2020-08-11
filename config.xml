@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.hiber.droners" version="0.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.hiber.droners" version="0.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Hiber Droner</name>
     <description>Hiber Droner</description>
     <author email="fmunshi@eidaramata.com" href="http://eidaramata.com/">PT. Eidara Matadata Presisi</author>
@@ -90,5 +90,4 @@
         <variable name="GRADLE_TOOLS_VERSION" value="2.3.+" />
         <variable name="GOOGLE_SERVICES_VERSION" value="3.0.0" />
     </plugin>
-    <engine name="android" spec="7.0.0" />
 </widget>

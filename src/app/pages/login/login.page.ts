@@ -60,10 +60,11 @@ export class LoginPage implements OnInit {
     if (this.loginForm.invalid) {
         return;
     }
-    //this.loginForm.value['device_token'] = "asdasd"
+    /* this.loginForm.value['device_token'] = "asdasd" */
     this.loginForm.patchValue({
       device_token : this.token
     });
+    console.log(this.loginForm.value)
       this.authService.login( this.loginForm.value, 'login_provider')
       .subscribe(res => {
         console.log(res)
